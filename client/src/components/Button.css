@@ -1,0 +1,39 @@
+/* src/components/Button.css */
+
+.custom-button {
+    background: linear-gradient(45deg, #6ab04c, #4caf50); /* Default gradient background */
+    color: white; /* White text */
+    border: none; /* No border */
+    border-radius: 25px; /* Rounded corners */
+    padding: 12px 25px; /* Padding */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    outline: none; /* Remove outline */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    font-weight: bold; /* Bold text */
+  }
+  
+  .custom-button:hover {
+    background: linear-gradient(45deg, #ff6b81, #ff3d00); /* Color change on hover */
+    transform: translateY(-2px) scale(1.05); /* Lift effect with scale */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* More prominent shadow on hover */
+  }
+  
+  /* Additional Button Styles */
+  .blue-button {
+    background: linear-gradient(45deg, #2196f3, #21cbf3);
+  }
+  
+  .blue-button:hover {
+    background: linear-gradient(45deg, #1976d2, #00bcd4);
+  }
+  
+  .red-button {
+    background: linear-gradient(45deg, #f44336, #e91e63);
+  }
+  
+  .red-button:hover {
+    background: linear-gradient(45deg, #d32f2f, #c2185b);
+  }
+  
