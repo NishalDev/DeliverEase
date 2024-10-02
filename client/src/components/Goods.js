@@ -1,7 +1,7 @@
 // src/components/Goods.js
 import React from 'react';
-import './Goods.css'; // Your existing styles
-import Button from './Button'; // Import the Button component
+import '../css/Goods.css'; // Your existing styles
+import Button from './Button.js'; // Import the Button component
 
 const goodsData = [
   { id: 1, name: 'Item 1', description: 'Description of Item 1' },
