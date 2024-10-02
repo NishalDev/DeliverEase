@@ -1,0 +1,23 @@
+/* BackButton.css */
+
+.back-button {
+    background-color: #f4f4f4; /* Light gray background */
+    color: #007bff; /* Primary text color */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px; /* Padding for the button */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+    margin: 10px; /* Margin around the button */
+  }
+  
+  .back-button:hover {
+    background-color: #e2e2e2; /* Darker gray on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+  }
+  
+  .back-button:active {
+    transform: translateY(0); /* Reset lift effect when clicked */
+  }
+  
