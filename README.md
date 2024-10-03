@@ -73,6 +73,7 @@ API endpoints including their request and response formats.
 - Headers: "Authorization: Bearer <your_token>"
 - Response: Confirmation of deletion.
 
+<br>
 
 ## Transport Management
 ### Get Available Goods for Transporters
@@ -101,7 +102,7 @@ API endpoints including their request and response formats.
 
 
 > [!NOTE]
-> Might change after frontend development or future Blockchain and AI integration
+> Some features may change after frontend development or future Blockchain and AI integration
 
 
 
