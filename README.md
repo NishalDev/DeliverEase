@@ -1,6 +1,8 @@
 # Documentation of API endpoints
 API endpoints including their request and response formats.
 
+<br>
+
 ## User Authentication
 ### Register a User
 - Method: POST
@@ -24,6 +26,7 @@ API endpoints including their request and response formats.
     "password": "securePassword123"
 }
 
+<br>
 
 ## Goods Management
 ### Create Goods
