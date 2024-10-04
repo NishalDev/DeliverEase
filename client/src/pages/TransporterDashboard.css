@@ -1,0 +1,90 @@
+/* Base styles */
+body {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Dashboard Container */
+  .transporter-dashboard {
+    max-width: 1200px; /* Centering with max width */
+    margin: 20px auto; /* Centering on the page */
+    padding: 20px; /* Space around content */
+    background-color: #ffffff; /* White background */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-radius: 10px; /* Rounded corners */
+  }
+  
+  /* Header Styles */
+  h1 {
+    text-align: center; /* Center align */
+    color: #003366; /* Brand color */
+    margin-bottom: 20px; /* Space below heading */
+  }
+  
+  /* Search Bar Styles */
+  .search-bar {
+    margin-bottom: 20px; /* Space below search bar */
+    text-align: center; /* Center align */
+  }
+  
+  .search-bar input {
+    padding: 10px; /* Padding for input */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    width: 80%; /* Full width */
+    max-width: 400px; /* Limit width */
+  }
+  
+  /* Transporter List Styles */
+  .transporter-list {
+    margin-bottom: 40px; /* Space below transporter list */
+  }
+  
+  .transporter-list table {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Merge borders */
+  }
+  
+  .transporter-list th, .transporter-list td {
+    padding: 10px; /* Padding for cells */
+    border: 1px solid #ccc; /* Light border */
+    text-align: left; /* Align text to left */
+  }
+  
+  .transporter-list th {
+    background-color: #007bff; /* Header background color */
+    color: white; /* Header text color */
+  }
+  
+  /* Add Transporter Form Styles */
+  .add-transporter-form {
+    margin-top: 40px; /* Space above add transporter form */
+  }
+  
+  .add-transporter-form form {
+    display: flex; /* Flex layout for form */
+    flex-direction: column; /* Column layout */
+    gap: 10px; /* Space between inputs */
+    max-width: 500px; /* Limit width */
+    margin: 0 auto; /* Center align */
+  }
+  
+  .add-transporter-form input {
+    padding: 10px; /* Padding for inputs */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+  }
+  
+  .add-transporter-form button {
+    padding: 10px; /* Padding for button */
+    background-color: #007bff; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
+  
+  .add-transporter-form button:hover {
+    background-color: #0056b3; /* Darker on hover */
+  }
+  
