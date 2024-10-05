@@ -13,7 +13,7 @@ const Homepage = () => {
 
   // Function to handle navigation to the Dashboard
   const handleSignInClick = () => {
-    navigate('/dashboard'); // Ensure you have this route defined
+    navigate('/register'); // Ensure you have this route defined
   };
 
   return (

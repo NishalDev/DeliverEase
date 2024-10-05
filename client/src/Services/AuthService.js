@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5002/api/users/';
+const API_URL = 'http://localhost:5002/api/auth/';
 
 // Create an object to hold your service methods
 const AuthService = {

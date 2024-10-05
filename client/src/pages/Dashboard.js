@@ -1,69 +1,57 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import './Dashboard.css'; // Import the CSS file for styling
-import BackButton from '../components/BackButton';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import BackButton from "../components/BackButton";
+import RoleButtons from "../components/RoleButtons"; // Import the RoleButtons component
+import GoodsDashboard from "./GoodsDashboard";
+import TransporterDashboard from "./TransporterDashboard";
+import "./Dashboard.css";
 
 const Dashboard = () => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
+  const [role, setRole] = useState(null);
+  /*
+  useEffect(() => {
+    const savedRole = localStorage.getItem('userRole');
+    if (savedRole) {
+      setRole(savedRole);
+    }
+  }, []);*/
 
-  // Functions to handle button clicks and navigate to the respective pages
-  const handleTrackClick = () => {
-    navigate('/track'); // Navigate to the Track page
-  };
-
-  const handleManageClick = () => {
-    navigate('/manage'); // Navigate to the ManageDashboard page
-  };
-
-  const handleHistoryClick = () => {
-    navigate('/payment'); // Navigate to the Payment page
-  };
-
-  const handleSupportClick = () => {
-    navigate('/customer-support'); // Navigate to the Customer Support page
+  const handleRoleSelect = (selectedRole) => {
+    setRole(selectedRole);
+    localStorage.setItem("userRole", selectedRole);
+    navigate(
+      selectedRole === "goodsOwner"
+        ? "/goods-dashboard"
+        : "/transporter-dashboard"
+    );
   };
 
   return (
     <div className="dashboard">
-        <BackButton /> {/* Add the Back Button here */}
+      <BackButton />
       <header className="dashboard-header">
         <h1>Welcome to Your Dashboard</h1>
         <p>Your one-stop solution for all your logistics needs.</p>
       </header>
 
-      <div className="dashboard-content">
-        <div className="card">
-          <h2>Parcel Tracking</h2>
-          <p>Track your parcels in real-time and get updated status.</p>
-          <button className="card-button" onClick={handleTrackClick}>
-            Track Now
-          </button>
+      {role === null ? ( // Role selection if no role is selected
+        <div className="role-selection">
+          <h2 className="role-selection-header">Please Select Your Role</h2>
+          <RoleButtons onSelectRole={handleRoleSelect} />{" "}
+          {/* Use RoleButtons here */}
         </div>
-
-        <div className="card">
-          <h2>Manage Deliveries</h2>
-          <p>Effortlessly manage all your deliveries from a single platform.</p>
-          <button className="card-button" onClick={handleManageClick}>
-            Manage
-          </button>
+      ) : (
+        <div>
+          <h2>Selected Role: {role}</h2>
+          {/* Render the dashboard based on the selected role */}
+          {role === "goodsOwner" ? (
+            <GoodsDashboard />
+          ) : (
+            <TransporterDashboard />
+          )}
         </div>
-
-        <div className="card">
-          <h2>Payment History</h2>
-          <p>View your payment history and invoices.</p>
-          <button className="card-button" onClick={handleHistoryClick}>
-            View History
-          </button>
-        </div>
-
-        <div className="card">
-          <h2>Customer Support</h2>
-          <p>Need help? Contact our 24/7 customer support.</p>
-          <button className="card-button" onClick={handleSupportClick}>
-            Get Support
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 };
