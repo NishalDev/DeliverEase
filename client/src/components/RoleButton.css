@@ -1,0 +1,40 @@
+.role-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align items */
+    margin-top: 30px; /* Space above the selection */
+    padding: 20px;
+    background-color: #f8f9fa; /* Light background for contrast */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .role-selection-header {
+    font-size: 2rem; /* Larger font size for emphasis */
+    color: #007bff; /* Primary color */
+    margin-bottom: 20px; /* Space below the header */
+  }
+  
+  .role-buttons {
+    display: flex;
+    justify-content: center; /* Center align buttons */
+    gap: 20px; /* Space between buttons */
+  }
+  
+  .role-button {
+    padding: 15px 25px; /* Adjust padding for larger button */
+    font-size: 1.2rem; /* Font size */
+    color: white;
+    background-color: #007bff; /* Primary color */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Button shadow */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .role-button:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+    transform: translateY(-3px); /* Lift effect on hover */
+  }
+  

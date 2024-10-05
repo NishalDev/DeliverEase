@@ -5,7 +5,7 @@ const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("goodsOwner"); // Default role is goodsOwner
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -13,13 +13,13 @@ const RegisterPage = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!username || !email || !password || !role) {
+    if (!username || !email || !password) {
       setError("All fields are required");
       return;
     }
 
     try {
-      await AuthService.register(username, email, password, role);
+      await AuthService.register(username, email, password);
       navigate("/login");
     } catch (err) {
       setError(
@@ -65,50 +65,6 @@ const RegisterPage = () => {
             placeholder="Enter your password"
           />
         </div>
-
-        <div className="form-group">
-          <label htmlFor="role">Role</label>
-          <select
-            id="role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
-            <option value="goodsOwner">Goods Owner</option>
-            <option value="transporter">Transporter</option>
-          </select>
-        </div>
-
-        {/* Conditional fields for transporter */}
-        {role === "transporter" && (
-          <div>
-            <div className="form-group">
-              <label htmlFor="vehicleType">Vehicle Type</label>
-              <input
-                type="text"
-                id="vehicleType"
-                placeholder="Enter your vehicle type"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="capacity">Capacity (kg)</label>
-              <input
-                type="number"
-                id="capacity"
-                placeholder="Enter vehicle capacity"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="currentLocation">Current Location</label>
-              <input
-                type="text"
-                id="currentLocation"
-                placeholder="Enter your current location"
-              />
-            </div>
-          </div>
-        )}
 
         <button type="submit" className="btn">
           Register
