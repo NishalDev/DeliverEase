@@ -123,10 +123,13 @@ export const updateGoods = async (req, res) => {
 export const deleteGoods = async (req, res) => {
   const { id } = req.params;
   const ownerId = req.user._id;
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    return res.status(400).json({ message: "Invalid ID format" });
+  }
 
   try {
     const goods = await Goods.findById(id);
-
+    console.log("Retrieved goods:", goods);
     if (!goods) {
       return res.status(404).json({ message: "Goods not found" });
     }
@@ -137,9 +140,10 @@ export const deleteGoods = async (req, res) => {
         .json({ message: "You are not authorized to delete this goods" });
     }
 
-    await goods.remove();
+    await Goods.deleteOne({ _id: id });
     return res.status(200).json({ message: "Goods deleted successfully" });
   } catch (error) {
+    console.error("Error deleting good:", error);
     return res.status(500).json({ message: error.message });
   }
 };

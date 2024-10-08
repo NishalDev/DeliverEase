@@ -6,12 +6,13 @@ import BackButton from "../components/BackButton";
 const GoodsDashboard = () => {
   const [goods, setGoods] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isEditing, setIsEditing] = useState(false); // New flag to track if we're editing
+  const [currentGoodId, setCurrentGoodId] = useState(null); // To hold the ID of the good being edited
   const [newGood, setNewGood] = useState({
     name: "",
     quantity: 0,
     pickupLocation: "",
     dropoffLocation: "",
-    //   image: null,
   });
 
   // Fetch goods from backend on component mount
@@ -32,38 +33,53 @@ const GoodsDashboard = () => {
     setSearchTerm(e.target.value);
   };
 
+  const handleEditGood = async (id) => {
+    const goodToEdit = goods.find((good) => good._id === id);
+    setNewGood(goodToEdit); // Populate the form with the selected good's details
+    setIsEditing(true); // Set to editing mode
+    setCurrentGoodId(id); // Store the current good's ID
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewGood({ ...newGood, [name]: value });
   };
-  // const handleImageUpload = (e) => {
-  //   const file = e.target.files[0];
-  //   setNewGood({ ...newGood, goodsImage: file });
-  // };
 
-  const handleAddGood = async (e) => {
+  const handleAddOrUpdateGood = async (e) => {
     e.preventDefault();
     if (newGood.name && newGood.dropoffLocation && newGood.pickupLocation) {
       try {
-        const formData = new FormData();
-        formData.append("name", newGood.name);
-        formData.append("quantity", newGood.quantity);
-        formData.append("pickupLocation", newGood.pickupLocation);
-        formData.append("dropoffLocation", newGood.dropoffLocation);
-        //     formData.append("image", newGood.image); // Append the image
+        if (isEditing) {
+          // If editing, update the good
+          const updatedGood = await GoodsService.updateGood(currentGoodId, newGood);
+          setGoods(goods.map((good) => (good._id === currentGoodId ? updatedGood : good))); // Update the goods array with the edited good
+          setIsEditing(false); // Reset editing mode
+          setCurrentGoodId(null); // Clear current good ID
+        } else {
+          // Otherwise, add a new good
+          const addedGood = await GoodsService.addGood(newGood);
+          setGoods([...goods, addedGood]); // Add the new good to the state
+        }
 
-        const addedGood = await GoodsService.addGood(newGood); // Add good using the service
-        setGoods([...goods, addedGood]); // Update state with the newly added good
+        // Reset the form
         setNewGood({
           name: "",
           quantity: 1,
           pickupLocation: "",
           dropoffLocation: "",
-          // image: null,
-        }); // Reset input fields
+        });
       } catch (error) {
-        console.error("Error adding new good:", error);
+        console.error("Error adding/updating good:", error);
       }
+    }
+  };
+
+  const handleDeleteGood = async (id) => {
+    try {
+      await GoodsService.deleteGood(id); // Call the delete service
+      setGoods(goods.filter((good) => good._id !== id)); // Update the state
+    } catch (error) {
+      console.error("Error deleting good:", error);
     }
   };
 
@@ -87,9 +103,9 @@ const GoodsDashboard = () => {
             <tr>
               <th>Name</th>
               <th>Quantity</th>
-              <th>pickupLocation</th>
-              <th>dropoffLocation</th>
-              {/* <th>image</th> */}
+              <th>Pickup Location</th>
+              <th>Dropoff Location</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -103,15 +119,14 @@ const GoodsDashboard = () => {
                   <td>{good.quantity}</td>
                   <td>{good.pickupLocation}</td>
                   <td>{good.dropoffLocation}</td>
-                  {/* <td>
-                    {good.image && (
-                      <img
-                        src={good.image}
-                        alt={good.name}
-                        style={{ width: "50px", height: "50px" }}
-                      />
-                    )}
-                  </td> */}
+                  <td>
+                    <button onClick={() => handleEditGood(good._id)}>
+                      Edit
+                    </button>
+                    <button onClick={() => handleDeleteGood(good._id)}>
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
           </tbody>
@@ -119,8 +134,8 @@ const GoodsDashboard = () => {
       </div>
 
       <div className="add-good-form">
-        <h2>Add New Good</h2>
-        <form onSubmit={handleAddGood}>
+        <h2>{isEditing ? "Edit Good" : "Add New Good"}</h2>
+        <form onSubmit={handleAddOrUpdateGood}>
           <input
             type="text"
             name="name"
@@ -153,16 +168,8 @@ const GoodsDashboard = () => {
             value={newGood.dropoffLocation || ""}
             onChange={handleInputChange}
             required
-          ></input>
-          {/* <input
-            type="file"
-            name="goodsImage"
-            accept="image/*"
-            onChange={handleImageUpload}
-            required
-          /> */}
-
-          <button type="submit">Add Good</button>
+          />
+          <button type="submit">{isEditing ? "Update Good" : "Add Good"}</button>
         </form>
       </div>
     </div>
