@@ -2,11 +2,16 @@ import mongoose from "mongoose";
 
 const goodsSchema = new mongoose.Schema(
   {
-    goodsType: { type: String, required: true },
-    size: { type: String, required: true },
-    weight: { type: Number, required: true },
+    name: { type: String, required: true },
+    quantity: { type: Number, required: true },
+    price: { type: Number, required: false },
+    description: { type: String },
+    goodsType: { type: String, required: false },
+    size: { type: String, required: false },
+    weight: { type: Number, required: false },
     pickupLocation: { type: String, required: true },
     dropoffLocation: { type: String, required: true },
+    goodImage: { type: String, required: false },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -21,7 +26,7 @@ const goodsSchema = new mongoose.Schema(
       enum: ["pending", "in-progress", "completed"],
       default: "pending",
     },
-    deliveryPrice: { type: Number, required: true },
+    deliveryPrice: { type: Number, required: false },
     paymentStatus: {
       type: String,
       enum: ["pending", "paid"],

@@ -1,8 +1,12 @@
 import Goods from "../models/Goods.js";
 import User from "../models/User.js";
-
+//import fs from "fs";
 export const createGoods = async (req, res) => {
   const {
+    name,
+    quantity,
+    price,
+    description,
     goodsType,
     size,
     weight,
@@ -11,7 +15,7 @@ export const createGoods = async (req, res) => {
     deliveryPrice,
   } = req.body;
   const ownerId = req.user._id;
-
+  const goodsImage = req.file ? req.file.path : "";
   try {
     const user = await User.findById(ownerId);
     if (!user || user.role !== "goodsOwner") {
@@ -21,12 +25,17 @@ export const createGoods = async (req, res) => {
     }
 
     const goods = await Goods.create({
+      name,
+      quantity,
+      price,
+      description,
       goodsType,
       size,
       weight,
       pickupLocation,
       dropoffLocation,
       deliveryPrice,
+      //image: goodsImage,
       owner: ownerId,
     });
 
@@ -65,6 +74,10 @@ export const getGoodsById = async (req, res) => {
 export const updateGoods = async (req, res) => {
   const { id } = req.params;
   const {
+    name,
+    quantity,
+    price,
+    description,
     goodsType,
     size,
     weight,
@@ -87,7 +100,11 @@ export const updateGoods = async (req, res) => {
         .status(403)
         .json({ message: "You are not authorized to update this goods" });
     }
-
+    //goods.image = req.file ? req.file.path : goods.image;
+    goods.name = name || goods.name;
+    goods.quantity = quantity || goods.quantity;
+    goods.price = price || goods.price;
+    goods.description = description || goods.description;
     goods.goodsType = goodsType || goods.goodsType;
     goods.size = size || goods.size;
     goods.weight = weight || goods.weight;

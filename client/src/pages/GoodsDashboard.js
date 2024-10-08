@@ -9,8 +9,9 @@ const GoodsDashboard = () => {
   const [newGood, setNewGood] = useState({
     name: "",
     quantity: 0,
-    price: 0,
-    description: "",
+    pickupLocation: "",
+    dropoffLocation: "",
+    //   image: null,
   });
 
   // Fetch goods from backend on component mount
@@ -35,14 +36,31 @@ const GoodsDashboard = () => {
     const { name, value } = e.target;
     setNewGood({ ...newGood, [name]: value });
   };
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   setNewGood({ ...newGood, goodsImage: file });
+  // };
 
   const handleAddGood = async (e) => {
     e.preventDefault();
-    if (newGood.name && newGood.quantity > 0 && newGood.price > 0) {
+    if (newGood.name && newGood.dropoffLocation && newGood.pickupLocation) {
       try {
+        const formData = new FormData();
+        formData.append("name", newGood.name);
+        formData.append("quantity", newGood.quantity);
+        formData.append("pickupLocation", newGood.pickupLocation);
+        formData.append("dropoffLocation", newGood.dropoffLocation);
+        //     formData.append("image", newGood.image); // Append the image
+
         const addedGood = await GoodsService.addGood(newGood); // Add good using the service
         setGoods([...goods, addedGood]); // Update state with the newly added good
-        setNewGood({ name: "", quantity: 0, price: 0, description: "" }); // Reset input fields
+        setNewGood({
+          name: "",
+          quantity: 1,
+          pickupLocation: "",
+          dropoffLocation: "",
+          // image: null,
+        }); // Reset input fields
       } catch (error) {
         console.error("Error adding new good:", error);
       }
@@ -69,21 +87,31 @@ const GoodsDashboard = () => {
             <tr>
               <th>Name</th>
               <th>Quantity</th>
-              <th>Price</th>
-              <th>Description</th>
+              <th>pickupLocation</th>
+              <th>dropoffLocation</th>
+              {/* <th>image</th> */}
             </tr>
           </thead>
           <tbody>
             {goods
               .filter((good) =>
-                good.name.toLowerCase().includes(searchTerm.toLowerCase())
+                good.name?.toLowerCase().includes(searchTerm.toLowerCase())
               )
               .map((good) => (
                 <tr key={good._id}>
                   <td>{good.name}</td>
                   <td>{good.quantity}</td>
-                  <td>${good.price}</td>
-                  <td>{good.description}</td>
+                  <td>{good.pickupLocation}</td>
+                  <td>{good.dropoffLocation}</td>
+                  {/* <td>
+                    {good.image && (
+                      <img
+                        src={good.image}
+                        alt={good.name}
+                        style={{ width: "50px", height: "50px" }}
+                      />
+                    )}
+                  </td> */}
                 </tr>
               ))}
           </tbody>
@@ -96,7 +124,7 @@ const GoodsDashboard = () => {
           <input
             type="text"
             name="name"
-            placeholder="Good Name"
+            placeholder="Name of the Good"
             value={newGood.name}
             onChange={handleInputChange}
             required
@@ -107,23 +135,33 @@ const GoodsDashboard = () => {
             placeholder="Quantity"
             value={newGood.quantity}
             onChange={handleInputChange}
+            min="1"
             required
           />
           <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={newGood.price}
+            type="text"
+            name="pickupLocation"
+            placeholder="Pick up location"
+            value={newGood.pickupLocation || ""}
             onChange={handleInputChange}
             required
           />
-          <textarea
-            name="description"
-            placeholder="Description"
-            value={newGood.description}
+          <input
+            type="text"
+            name="dropoffLocation"
+            placeholder="Drop Off location"
+            value={newGood.dropoffLocation || ""}
             onChange={handleInputChange}
             required
-          ></textarea>
+          ></input>
+          {/* <input
+            type="file"
+            name="goodsImage"
+            accept="image/*"
+            onChange={handleImageUpload}
+            required
+          /> */}
+
           <button type="submit">Add Good</button>
         </form>
       </div>
