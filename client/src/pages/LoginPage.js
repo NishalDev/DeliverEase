@@ -10,32 +10,24 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await AuthService.login(email, password); // Await the response from the login service
-      // Assuming the response contains user details or a token
-      console.log("Login response:", response);
-      const user = response.data;
+      const response = await AuthService.login(email, password);
+
+      // Clear old token or user data
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
-      if (user && user.token) {
-        // Check if token is part of the user response
-        // Store the user object in localStorage
-        localStorage.setItem("user", JSON.stringify(user));
+      const { token, user } = response.data;
 
-        // Log the stored user data
-        console.log(
-          "User data stored in localStorage:",
-          localStorage.getItem("user")
-        );
+      // Store the new token and user data
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
-        // Navigate to the dashboard after successful login
-        navigate("/dashboard");
-      } else {
-        console.error("Token not found in the response");
-      }
+      // Navigate to the dashboard or relevant page
+      navigate("/dashboard");
     } catch (error) {
-      console.error("Login failed:", error.message);
+      console.error("Login failed:", error);
     }
   };
 
