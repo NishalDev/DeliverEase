@@ -15,7 +15,7 @@ export const createGoods = async (req, res) => {
     deliveryPrice,
   } = req.body;
   const ownerId = req.user._id;
-  const goodsImage = req.file ? req.file.path : "";
+  //const goodsImage = req.file ? req.file.path : "";
   try {
     const user = await User.findById(ownerId);
     if (!user || user.role !== "goodsOwner") {
@@ -47,8 +47,7 @@ export const createGoods = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
-export const getGoods = async (req, res) => {
+export const getAllGoods = async (req, res) => {
   try {
     const goods = await Goods.find().populate("owner", "username email");
     return res.status(200).json(goods);
@@ -57,19 +56,33 @@ export const getGoods = async (req, res) => {
   }
 };
 
-export const getGoodsById = async (req, res) => {
-  const { id } = req.params;
+export const getGoods = async (req, res) => {
+  const userId = req.user._id; // Assuming req.user contains the logged-in user's ID
 
   try {
-    const goods = await Goods.findById(id).populate("owner", "username email");
-    if (!goods) {
-      return res.status(404).json({ message: "Goods not found" });
-    }
+    const goods = await Goods.find({ owner: userId }).populate(
+      "owner",
+      "username email"
+    );
     return res.status(200).json(goods);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
+
+// export const getGoodsById = async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const goods = await Goods.findById(id).populate("owner", "username email");
+//     if (!goods) {
+//       return res.status(404).json({ message: "Goods not found" });
+//     }
+//     return res.status(200).json(goods);
+//   } catch (error) {
+//     return res.status(500).json({ message: error.message });
+//   }
+// };
 
 export const updateGoods = async (req, res) => {
   const { id } = req.params;
