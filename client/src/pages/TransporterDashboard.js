@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import GoodsService from "../Services/GoodsService"; // Use the same GoodsService for API calls
+//import TransportService from "../Services/TransportService"; // Use the same GoodsService for API calls
 import "./TransporterDashboard.css";
 import BackButton from "../components/BackButton";
+import TransportService from "../Services/TransportService.js";
 
 const TransporterDashboard = () => {
   const [goods, setGoods] = useState([]);
@@ -11,7 +12,7 @@ const TransporterDashboard = () => {
   useEffect(() => {
     const fetchGoods = async () => {
       try {
-        const goodsData = await GoodsService.getAllGoods(); // Fetch all goods from the service
+        const goodsData = await TransportService.getAllGoods(); // Fetch all goods from the service
         setGoods(goodsData);
       } catch (error) {
         console.error("Error fetching goods:", error);
