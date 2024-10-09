@@ -2,7 +2,7 @@ import express from "express";
 import {
   createGoods,
   getGoods,
-  getGoodsById,
+  getAllGoods,
   updateGoods,
   deleteGoods,
 } from "../controllers/goodsController.js";
@@ -13,7 +13,7 @@ const router = express.Router();
 //router.post('/', upload.single('goodsImage'), createGoods);
 router.post("/", protect, createGoods);
 router.get("/", protect, getGoods);
-router.get("/:id", protect, getGoodsById);
+router.get("/all", protect, getAllGoods);
 router.put("/:id", protect, updateGoods);
 router.delete("/:id", protect, deleteGoods);
 

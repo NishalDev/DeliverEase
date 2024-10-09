@@ -6,21 +6,34 @@ const API_URL = "http://localhost:5002/api/goods"; // Assuming the backend is ru
 // Function to fetch goods
 const fetchGoods = async () => {
   try {
-    const token = JSON.parse(localStorage.getItem("user")).token; // Extract token from user object
-    console.log("Token:", token);
+    const token = JSON.parse(localStorage.getItem("user")).token;
     const config = {
       headers: {
         Authorization: `Bearer ${token}`, // Include token in Authorization header
       },
     };
-    const response = await axios.get(API_URL, config);
+    const response = await axios.get(API_URL, config); // Get all goods
     return response.data;
   } catch (error) {
     console.error("Error fetching goods:", error);
     throw error;
   }
 };
-
+const getAllGoods = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`, // Include token in Authorization header
+      },
+    };
+    const response = await axios.get(`${API_URL}/all`, config); // Get all goods for transporters
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching all goods:", error);
+    throw error;
+  }
+};
 // Function to add a new good with authentication
 const addGood = async (goodData) => {
   try {
@@ -73,4 +86,4 @@ const deleteGood = async (id) => {
   }
 };
 // Export the service methods
-export default { fetchGoods, addGood, updateGood, deleteGood };
+export default { getAllGoods, fetchGoods, addGood, updateGood, deleteGood };
