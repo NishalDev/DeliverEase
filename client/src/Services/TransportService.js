@@ -1,18 +1,16 @@
 import axios from "axios";
 
-// Define the API URL
 const API_URL = "http://localhost:5002/api/transporters";
 
-// Function to fetch all goods for transporter dashboard
 const getAllGoods = async () => {
   try {
-    const token = JSON.parse(localStorage.getItem("user")).token; // Get token from localStorage
+    const token = JSON.parse(localStorage.getItem("user")).token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Include token in Authorization header
+        Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.get(`${API_URL}/available-goods`, config); // Make sure this calls the correct endpoint
+    const response = await axios.get(`${API_URL}/available-goods`, config);
     return response.data;
   } catch (error) {
     console.error("Error fetching all goods:", error);
@@ -21,14 +19,14 @@ const getAllGoods = async () => {
 };
 const selectGood = async (id) => {
   try {
-    const token = JSON.parse(localStorage.getItem("user")).token; // Get token from localStorage
+    const token = JSON.parse(localStorage.getItem("user")).token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Include token in Authorization header
+        Authorization: `Bearer ${token}`,
       },
     };
 
-    const response = await axios.post(`${API_URL}/offer/${id}`, {}, config); // Call select API
+    const response = await axios.post(`${API_URL}/offer/${id}`, {}, config);
     return response.data;
   } catch (error) {
     console.error("Error selecting good:", error);
@@ -36,4 +34,4 @@ const selectGood = async (id) => {
   }
 };
 
-export default { selectGood, getAllGoods }; // Ensure you export this function
+export default { selectGood, getAllGoods };
