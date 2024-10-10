@@ -19,11 +19,13 @@ const transportSchema = new mongoose.Schema(
     },
     vehicleType: {
       type: String,
+      enum: ["truck", "van", "bike"],
+      default: "truck", // Add your valid vehicle types
       required: true,
     },
-    currentLocation: { type: String },
-    deliveryStartTime: { type: Date },
-    deliveryEndTime: { type: Date },
+    currentLocation: { type: String, required: false },
+    deliveryStartTime: { type: Date, required: false },
+    deliveryEndTime: { type: Date, required: false },
     status: {
       type: String,
       enum: ["assigned", "in-transit", "delivered"],

@@ -12,8 +12,12 @@ const TransporterDashboard = () => {
   useEffect(() => {
     const fetchGoods = async () => {
       try {
-        const goodsData = await TransportService.getAllGoods(); // Fetch all goods from the service
-        setGoods(goodsData);
+        const goodsData = await TransportService.getAllGoods();
+        const loggedInUser = JSON.parse(localStorage.getItem("user"));
+        const filteredGoods = goodsData.filter(
+          (good) => good.owner._id !== loggedInUser._id
+        ); // Fetch all goods from the service
+        setGoods(filteredGoods);
       } catch (error) {
         console.error("Error fetching goods:", error);
       }
@@ -25,11 +29,23 @@ const TransporterDashboard = () => {
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
+  const handleSelectGood = async (id) => {
+    try {
+      const response = await TransportService.selectGood(id); // Await the API call
+      if (response) {
+        alert("You have selected the good for delivery!"); // Inform the transporter
+        setGoods(goods.filter((good) => good._id !== id)); // Remove the selected good from the list
+      }
+    } catch (error) {
+      console.error("Error selecting good:", error);
+      alert("There was an error selecting the good. Please try again."); // Notify the user in case of error
+    }
+  };
 
   return (
     <div className="transporter-dashboard">
       <BackButton />
-      <h1>Transporter Dashboard</h1>
+      <h1>Available Goods for Transport</h1>
       <div className="search-bar">
         <input
           type="text"
@@ -40,7 +56,7 @@ const TransporterDashboard = () => {
       </div>
 
       <div className="goods-list">
-        <h2>Available Goods</h2>
+        <h2>Goods List</h2>
         <table>
           <thead>
             <tr>
@@ -48,7 +64,7 @@ const TransporterDashboard = () => {
               <th>Quantity</th>
               <th>Pickup Location</th>
               <th>Dropoff Location</th>
-              <th>Owner</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -62,7 +78,11 @@ const TransporterDashboard = () => {
                   <td>{good.quantity}</td>
                   <td>{good.pickupLocation}</td>
                   <td>{good.dropoffLocation}</td>
-                  <td>{good.owner?.username}</td>
+                  <td>
+                    <button onClick={() => handleSelectGood(good._id)}>
+                      Select for Delivery
+                    </button>
+                  </td>
                 </tr>
               ))}
           </tbody>

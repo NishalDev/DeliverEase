@@ -1,30 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import RoleButtons from "../components/RoleButtons"; // Import the RoleButtons component
-import GoodsDashboard from "./GoodsDashboard";
-import TransporterDashboard from "./TransporterDashboard";
+import AuthService from "../Services/AuthService"; // Import the AuthService for API calls
 import "./Dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
-  /*
-  useEffect(() => {
-    const savedRole = localStorage.getItem('userRole');
-    if (savedRole) {
-      setRole(savedRole);
-    }
-  }, []);*/
 
-  const handleRoleSelect = (selectedRole) => {
+  // Handle role selection and navigate to the respective dashboard
+  const handleRoleSelect = async (selectedRole) => {
     setRole(selectedRole);
     localStorage.setItem("userRole", selectedRole);
-    navigate(
-      selectedRole === "goodsOwner"
-        ? "/goods-dashboard"
-        : "/transporter-dashboard"
-    );
+
+    // Call the API to update the role in the backend
+    try {
+      await AuthService.switchRole(selectedRole); // Make the API call to switch role
+      // Navigate based on selected role
+      const user = JSON.parse(localStorage.getItem("user"));
+      user.role = selectedRole; // Update the role
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate(
+        selectedRole === "goodsOwner"
+          ? "/goods-dashboard"
+          : "/transporter-dashboard"
+      );
+    } catch (error) {
+      console.error("Error switching role:", error);
+      // Handle error (e.g., show a message to the user)
+    }
   };
 
   return (
@@ -35,7 +40,7 @@ const Dashboard = () => {
         <p>Your one-stop solution for all your logistics needs.</p>
       </header>
 
-      {role === null ? ( // Role selection if no role is selected
+      {role === null ? ( // Role selection screen
         <div className="role-selection">
           <h2 className="role-selection-header">Please Select Your Role</h2>
           <RoleButtons onSelectRole={handleRoleSelect} />{" "}
@@ -44,12 +49,7 @@ const Dashboard = () => {
       ) : (
         <div>
           <h2>Selected Role: {role}</h2>
-          {/* Render the dashboard based on the selected role */}
-          {role === "goodsOwner" ? (
-            <GoodsDashboard />
-          ) : (
-            <TransporterDashboard />
-          )}
+          <p>Redirecting to your dashboard...</p>
         </div>
       )}
     </div>
