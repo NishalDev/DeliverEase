@@ -1,5 +1,5 @@
 import React from 'react';
-import './ServicesPage.css'; // Import the CSS file
+import '../css/main.css'; // Import the CSS file
 import BackButton from '../components/BackButton';
 
 const ServicesPage = () => {

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './ManageDashboard.css'; // Import the CSS file for styling
+import '../css/main.css'; // Import the CSS file for styling
 import BackButton from '../components/BackButton';
 
 const ManageDashboard = () => {

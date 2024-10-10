@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GoodsService from "../Services/GoodsService"; // Import the GoodsService
-import "./GoodsDashboard.css";
+import "../css/main.css";
 import BackButton from "../components/BackButton";
 
 const GoodsDashboard = () => {
