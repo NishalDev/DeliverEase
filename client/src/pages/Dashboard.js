@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import RoleButtons from "../components/RoleButtons"; // Import the RoleButtons component
 import AuthService from "../Services/AuthService"; // Import the AuthService for API calls
-import "./Dashboard.css";
-
+import "../css/main.css";
+//import ThreeScene from "../ThreeScene.js";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);

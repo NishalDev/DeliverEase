@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './PaymentPage.css'; // Import the CSS file
+import '../css/main.css'; // Import the CSS file
 import BackButton from '../components/BackButton';
 
 const initialTransactions = [
