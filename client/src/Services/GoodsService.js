@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Define the API URL
-const API_URL = "http://localhost:5002/api/goods"; // Assuming the backend is running on the same server
+const API_URL = "http://localhost:5002/api/goods";
 
 // Function to fetch goods
 const fetchGoods = async () => {
@@ -9,10 +9,10 @@ const fetchGoods = async () => {
     const token = JSON.parse(localStorage.getItem("user")).token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Include token in Authorization header
+        Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.get(API_URL, config); // Get all goods
+    const response = await axios.get(API_URL, config);
     return response.data;
   } catch (error) {
     console.error("Error fetching goods:", error);
@@ -24,27 +24,27 @@ const getAllGoods = async () => {
     const token = JSON.parse(localStorage.getItem("user")).token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Include token in Authorization header
+        Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.get(`${API_URL}/all`, config); // Get all goods for transporters
+    const response = await axios.get(`${API_URL}/all`, config);
     return response.data;
   } catch (error) {
     console.error("Error fetching all goods:", error);
     throw error;
   }
 };
-// Function to add a new good with authentication
+
 const addGood = async (goodData) => {
   try {
-    const token = JSON.parse(localStorage.getItem("user")).token; // Get token from localStorage
+    const token = JSON.parse(localStorage.getItem("user")).token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Include token in Authorization header
+        Authorization: `Bearer ${token}`,
       },
     };
 
-    const response = await axios.post(API_URL, goodData, config); // Pass config with headers
+    const response = await axios.post(API_URL, goodData, config);
     return response.data;
   } catch (error) {
     console.error("Error adding new good:", error);
@@ -52,17 +52,16 @@ const addGood = async (goodData) => {
   }
 };
 
-// Function to update an existing good
 const updateGood = async (id, goodData) => {
   try {
-    const token = JSON.parse(localStorage.getItem("user")).token; // Get token from localStorage
+    const token = JSON.parse(localStorage.getItem("user")).token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Include token in Authorization header
+        Authorization: `Bearer ${token}`,
       },
     };
 
-    const response = await axios.put(`${API_URL}/${id}`, goodData, config); // Pass config with headers
+    const response = await axios.put(`${API_URL}/${id}`, goodData, config);
     return response.data;
   } catch (error) {
     console.error("Error updating good:", error);
@@ -71,19 +70,19 @@ const updateGood = async (id, goodData) => {
 };
 const deleteGood = async (id) => {
   try {
-    const token = JSON.parse(localStorage.getItem("user")).token; // Get token from localStorage
+    const token = JSON.parse(localStorage.getItem("user")).token;
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`, // Include token in Authorization header
+        Authorization: `Bearer ${token}`,
       },
     };
 
-    const response = await axios.delete(`${API_URL}/${id}`, config); // Pass config with headers
+    const response = await axios.delete(`${API_URL}/${id}`, config);
     return response.data;
   } catch (error) {
     console.error("Error deleting good:", error);
     throw error;
   }
 };
-// Export the service methods
+
 export default { getAllGoods, fetchGoods, addGood, updateGood, deleteGood };

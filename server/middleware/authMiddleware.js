@@ -17,7 +17,7 @@ export const protect = async (req, res, next) => {
       req.user = await User.findById(decoded.id).select("-password"); // Exclude password from user data
       next(); // Proceed to the next middleware/controller
     } catch (error) {
-      console.error("Not authorized, token failed");
+      console.error("Not authorized, token failed", error);
       return res.status(401).json({ message: "Not authorized, token failed" });
     }
   }

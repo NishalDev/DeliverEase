@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types"; // Import PropTypes
-import "./RoleButton.css"; // Create a separate CSS file for styling
+import "../css/RoleButton.css"; // Create a separate CSS file for styling
 
 const RoleButtons = ({ onSelectRole }) => {
   return (
