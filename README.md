@@ -76,6 +76,12 @@ API endpoints including their request and response formats.
 - Headers: "Authorization: Bearer <your_token>"
 - Response: Confirmation of deletion.
 
+### Accpet Offer
+- Method: PUT
+- URL: http://localhost:5002/api/goods/accept-offer/:transportId
+- Headers: "Authorization: Bearer <goods_owner_token>"
+- Response: Status:"In-transit".
+
 <br>
 
 ## Transport Management
