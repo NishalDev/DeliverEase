@@ -1,25 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
-import RoleButtons from "../components/RoleButtons"; // Import the RoleButtons component
-import AuthService from "../Services/AuthService"; // Import the AuthService for API calls
+import RoleButtons from "../components/RoleButtons";
+import AuthService from "../Services/AuthService";
+import { handleScroll } from "./scrollHandle.js"; // Import the scroll function
 import "../css/main.css";
-//import ThreeScene from "../ThreeScene.js";
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
 
-  // Handle role selection and navigate to the respective dashboard
   const handleRoleSelect = async (selectedRole) => {
     setRole(selectedRole);
     localStorage.setItem("userRole", selectedRole);
 
-    // Call the API to update the role in the backend
     try {
-      await AuthService.switchRole(selectedRole); // Make the API call to switch role
-      // Navigate based on selected role
+      await AuthService.switchRole(selectedRole);
       const user = JSON.parse(localStorage.getItem("user"));
-      user.role = selectedRole; // Update the role
+      user.role = selectedRole;
       localStorage.setItem("user", JSON.stringify(user));
       navigate(
         selectedRole === "goodsOwner"
@@ -28,30 +26,42 @@ const Dashboard = () => {
       );
     } catch (error) {
       console.error("Error switching role:", error);
-      // Handle error (e.g., show a message to the user)
     }
   };
 
-  return (
-    <div className="dashboard">
-      <BackButton />
-      <header className="dashboard-header">
-        <h1>Welcome to Your Dashboard</h1>
-        <p>Your one-stop solution for all your logistics needs.</p>
-      </header>
+  useEffect(() => {
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
 
-      {role === null ? ( // Role selection screen
-        <div className="role-selection">
-          <h2 className="role-selection-header">Please Select Your Role</h2>
-          <RoleButtons onSelectRole={handleRoleSelect} />{" "}
-          {/* Use RoleButtons here */}
-        </div>
-      ) : (
-        <div>
-          <h2>Selected Role: {role}</h2>
-          <p>Redirecting to your dashboard...</p>
-        </div>
-      )}
+    // Clean up the event listener on unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  return (
+    <div className="container">
+      <BackButton />
+      <header className="card full-page">
+        <h1 className="hero-title">Welcome to Your Dashboard</h1>
+        <p className="hero-subtitle">
+          Manage your logistics tasks efficiently.
+        </p>
+      </header>
+      <div className="card full-page">
+        {role === null ? (
+          <div>
+            <h2 className="hero-title">Select Your Role</h2>
+            <p className="hero-subtitle">Choose your role to get started</p>
+            <RoleButtons onSelectRole={handleRoleSelect} />
+          </div>
+        ) : (
+          <div>
+            <h2 className="hero-title">Selected Role: {role}</h2>
+            <p className="hero-subtitle">Redirecting to your dashboard...</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

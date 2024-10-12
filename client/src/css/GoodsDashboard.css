@@ -1,91 +1,127 @@
-/* Base styles */
-body {
-    font-family: 'Arial', sans-serif;
-  }
-  
-  /* Dashboard Container */
-  .goods-dashboard {
-    max-width: 1200px; /* Centering with max width */
-    margin: 20px auto; /* Centering on the page */
-    padding: 20px; /* Space around content */
-    background-color: #ffffff; /* White background */
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    border-radius: 10px; /* Rounded corners */
-  }
-  
-  /* Header Styles */
-  h1 {
-    text-align: center; /* Center align */
-    color: #003366; /* Brand color */
-    margin-bottom: 20px; /* Space below heading */
-  }
-  
-  /* Search Bar Styles */
-  .search-bar {
-    margin-bottom: 20px; /* Space below search bar */
-    text-align: center; /* Center align */
-  }
-  
-  .search-bar input {
-    padding: 10px; /* Padding for input */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 5px; /* Rounded corners */
-    width: 80%; /* Full width */
-    max-width: 400px; /* Limit width */
-  }
-  
-  /* Goods List Styles */
-  .goods-list {
-    margin-bottom: 40px; /* Space below goods list */
-  }
-  
-  .goods-list table {
-    width: 100%; /* Full width */
-    border-collapse: collapse; /* Merge borders */
-  }
-  
-  .goods-list th, .goods-list td {
-    padding: 10px; /* Padding for cells */
-    border: 1px solid #ccc; /* Light border */
-    text-align: left; /* Align text to left */
-  }
-  
-  .goods-list th {
-    background-color: #007bff; /* Header background color */
-    color: white; /* Header text color */
-  }
-  
-  /* Add Good Form Styles */
-  .add-good-form {
-    margin-top: 40px; /* Space above add good form */
-  }
-  
-  .add-good-form form {
-    display: flex; /* Flex layout for form */
-    flex-direction: column; /* Column layout */
-    gap: 10px; /* Space between inputs */
-    max-width: 500px; /* Limit width */
-    margin: 0 auto; /* Center align */
-  }
-  
-  .add-good-form input,
-  .add-good-form textarea {
-    padding: 10px; /* Padding for inputs */
-    border: 1px solid #ccc; /* Light border */
-    border-radius: 5px; /* Rounded corners */
-  }
-  
-  .add-good-form button {
-    padding: 10px; /* Padding for button */
-    background-color: #007bff; /* Button color */
-    color: white; /* Button text color */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s ease; /* Smooth transition */
-  }
-  
-  .add-good-form button:hover {
-    background-color: #0056b3; /* Darker on hover */
-  }
-  
+.goods-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  /* Light background for better contrast */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+  color: #333;
+  /* Dark color for headings */
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.goods-list {
+  margin-bottom: 20px;
+}
+
+/* Add this to your goodsDashboard.css */
+.goods-list button {
+  margin-right: 10px;
+  /* Space between buttons */
+}
+
+.goods-list button:last-child {
+  margin-right: 0;
+  /* Remove margin from the last button */
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+th {
+  background-color: #e2e2e2;
+  /* Light grey for table header */
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+  /* Hover effect for table rows */
+}
+
+.add-good-form {
+  background-color: #fff;
+  /* White background for the form */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submit-button, .edit-button, .delete-button {
+  background-color: #007bff;
+  /* Primary button color */
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-right: 10px;
+}
+
+.submit-button:hover,
+.edit-button:hover,
+.delete-button:hover {
+  background-color: #0056b3;
+
+  /* Darker shade on hover */
+}
+
+.input-group {
+  margin-bottom: 15px;
+  /* Spacing between input groups */
+}
+
+.input-label {
+  display: block;
+  /* Make label block to occupy full width */
+  margin-bottom: 5px;
+  /* Space between label and input */
+  font-weight: bold;
+  /* Bold label for emphasis */
+}
+
+.quantity-input {
+  border: 2px solid #007bff;
+  /* Blue border for quantity field */
+  border-radius: 5px;
+  /* Rounded corners */
+  transition: border-color 0.3s;
+  /* Smooth transition for border color */
+}
+
+.quantity-input:focus {
+  border-color: #0056b3;
+  /* Darker border color on focus */
+}

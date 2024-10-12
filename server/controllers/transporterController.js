@@ -18,10 +18,12 @@ export const getAvailableGoods = async (req, res) => {
 };
 
 // Offer transport for a specific good
+// Offer transport for a specific good
 export const offerTransport = async (req, res) => {
   const transporterId = req.user._id; // Get the ID of the authenticated user
   const { goodsId } = req.params; // Get the goods ID from the URL parameters
-  console.log("Goods ID:", goodsId);
+  const { deliveryCharge } = req.body; // Extract deliveryCharge from the request body
+
   try {
     // Check if the user is a transporter
     const transporter = await User.findById(transporterId);
@@ -30,11 +32,8 @@ export const offerTransport = async (req, res) => {
         .status(403)
         .json({ message: "Only transporters can offer transport services" });
     }
-    const goods = await Goods.findById(goodsId);
-    console.log("Goods ID:", goodsId); // Log the goods ID
-    console.log("Goods found:", goods); // Log the found goods
-    // Find the good by ID and check its status
 
+    const goods = await Goods.findById(goodsId);
     if (!goods || goods.status !== "pending") {
       return res
         .status(404)
@@ -52,19 +51,30 @@ export const offerTransport = async (req, res) => {
         .json({ message: "You have already offered to transport this goods" });
     }
 
+    // Ensure the vehicleType is set correctly
+    const vehicleType = transporter.vehicleType || req.body.vehicleType; // Get from transporter or request body
+    if (!vehicleType) {
+      return res.status(400).json({ message: "Vehicle type is required" });
+    }
+
+    // Ensure deliveryCharge is provided
+    if (!deliveryCharge) {
+      return res.status(400).json({ message: "Delivery charge is required" });
+    }
+
     // Create a new transport offer
     const transportOffer = await Transport.create({
       transporter: transporterId,
       goods: goodsId,
-      vehicleType: transporter.vehicleType, // Use the transporter's vehicle type
-      capacity: transporter.capacity, // Use the transporter's capacity
-      currentLocation: transporter.currentLocation, // Use the transporter's current location
+      vehicleType: vehicleType, // Use the transporter's vehicle type or from request body
+      capacity: transporter.capacity,
+      currentLocation: transporter.currentLocation,
       trackingId: `TRK-${Date.now()}`, // Generate a unique tracking ID
-      status: "assigned", // Initial status
+      status: "assigned",
+      deliveryCharge: deliveryCharge, // Pass the delivery charge
     });
 
-    // Optionally, update the good's status to 'in progress' or similar
-    goods.status = "in-progress"; // Change this if you want to reflect the offer in the goods status
+    goods.status = "in-progress";
     await goods.save();
 
     return res.status(201).json(transportOffer);

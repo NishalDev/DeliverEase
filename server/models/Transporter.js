@@ -20,16 +20,35 @@ const transportSchema = new mongoose.Schema(
     vehicleType: {
       type: String,
       enum: ["truck", "van", "bike"],
-      default: "truck", // Add your valid vehicle types
+      // Default vehicle type
       required: true,
     },
-    currentLocation: { type: String, required: false },
-    deliveryStartTime: { type: Date, required: false },
-    deliveryEndTime: { type: Date, required: false },
+    deliveryCharge: {
+      type: Number,
+      required: true, // Ensure delivery charge is always provided
+    },
+    currentLocation: {
+      type: String,
+      // required: function () {
+      //   return this.status === "in-transit"; // Current location is required once delivery starts
+      // },
+    },
+    deliveryStartTime: {
+      type: Date,
+      // required: function () {
+      //   return this.status === "in-transit"; // Start time is required once the delivery starts
+      // },
+    },
+    deliveryEndTime: {
+      type: Date,
+      // required: function () {
+      //   return this.status === "delivered"; // End time is required once the delivery ends
+      // },
+    },
     status: {
       type: String,
-      enum: ["assigned", "in-transit", "delivered"],
-      default: "assigned",
+      enum: ["pendingOwnerApproval", "assigned", "in-transit", "delivered"],
+      default: "pendingOwnerApproval", // Initial status waiting for goods owner approval
     },
   },
   { timestamps: true }

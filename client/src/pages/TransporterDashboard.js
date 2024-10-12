@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 //import TransportService from "../Services/TransportService"; // Use the same GoodsService for API calls
-import "../css/main.css";
+import "../css/TransporterDashboard.css"; // Adjust the path according to your project structure
+
 import BackButton from "../components/BackButton";
 import TransportService from "../Services/TransportService.js";
 
