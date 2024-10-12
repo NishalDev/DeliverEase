@@ -1,5 +1,6 @@
 import Goods from "../models/Goods.js";
 import User from "../models/User.js";
+import Transport from "../models/Transporter.js";
 //import fs from "fs";
 export const createGoods = async (req, res) => {
   const {
@@ -157,6 +158,38 @@ export const deleteGoods = async (req, res) => {
     return res.status(200).json({ message: "Goods deleted successfully" });
   } catch (error) {
     console.error("Error deleting good:", error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const respondToOffer = async (req, res) => {
+  const { offerId } = req.params; // Get offer ID from the request params
+  const ownerId = req.user._id; // Get the current logged-in user ID
+
+  try {
+    // Find the transport offer by ID
+    console.log(offerId);
+    const transportOffer = await Transport.findById(offerId).populate("goods");
+
+    if (!transportOffer) {
+      return res.status(404).json({ message: "Offer not found" });
+    }
+
+    // Check if the goods belong to the current logged-in owner
+    const goods = await Goods.findById(transportOffer.goods._id);
+
+    if (goods.owner.toString() !== ownerId.toString()) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to accept this offer" });
+    }
+
+    // Accept the offer and mark it as "in-transit"
+    transportOffer.status = "in-transit";
+    await transportOffer.save();
+
+    return res.status(200).json({ message: "Offer accepted", transportOffer });
+  } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };

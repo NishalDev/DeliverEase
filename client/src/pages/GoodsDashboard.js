@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import GoodsService from "../Services/GoodsService"; // Import the GoodsService
-import "../css/main.css";
+//import "../css/main.css";
+import "../css/GoodsDashboard.css";
 import BackButton from "../components/BackButton";
 
 const GoodsDashboard = () => {
   const [goods, setGoods] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isEditing, setIsEditing] = useState(false); // New flag to track if we're editing
-  const [currentGoodId, setCurrentGoodId] = useState(null); // To hold the ID of the good being edited
+  const [isEditing, setIsEditing] = useState(false); // Flag to track if we're editing
+  const [currentGoodId, setCurrentGoodId] = useState(null); // Holds the ID of the good being edited
   const [newGood, setNewGood] = useState({
     name: "",
-    quantity: 0,
+    quantity: 1, // Default to 1 when adding a new good
     pickupLocation: "",
     dropoffLocation: "",
   });
@@ -29,30 +30,41 @@ const GoodsDashboard = () => {
     fetchGoods();
   }, []);
 
+  // Handle search term input change
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleEditGood = async (id) => {
+  // Handle selecting a good for editing
+  const handleEditGood = (id) => {
     const goodToEdit = goods.find((good) => good._id === id);
     setNewGood(goodToEdit); // Populate the form with the selected good's details
     setIsEditing(true); // Set to editing mode
     setCurrentGoodId(id); // Store the current good's ID
   };
 
+  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewGood({ ...newGood, [name]: value });
   };
 
+  // Handle adding a new good or updating an existing good
   const handleAddOrUpdateGood = async (e) => {
     e.preventDefault();
-    if (newGood.name && newGood.dropoffLocation && newGood.pickupLocation) {
+    if (newGood.name && newGood.pickupLocation && newGood.dropoffLocation) {
       try {
         if (isEditing) {
           // If editing, update the good
-          const updatedGood = await GoodsService.updateGood(currentGoodId, newGood);
-          setGoods(goods.map((good) => (good._id === currentGoodId ? updatedGood : good))); // Update the goods array with the edited good
+          const updatedGood = await GoodsService.updateGood(
+            currentGoodId,
+            newGood
+          );
+          setGoods(
+            goods.map((good) =>
+              good._id === currentGoodId ? updatedGood : good
+            )
+          ); // Update the goods array
           setIsEditing(false); // Reset editing mode
           setCurrentGoodId(null); // Clear current good ID
         } else {
@@ -61,7 +73,7 @@ const GoodsDashboard = () => {
           setGoods([...goods, addedGood]); // Add the new good to the state
         }
 
-        // Reset the form
+        // Reset the form after adding or editing
         setNewGood({
           name: "",
           quantity: 1,
@@ -74,6 +86,7 @@ const GoodsDashboard = () => {
     }
   };
 
+  // Handle deleting a good
   const handleDeleteGood = async (id) => {
     try {
       await GoodsService.deleteGood(id); // Call the delete service
@@ -123,6 +136,7 @@ const GoodsDashboard = () => {
                     <button onClick={() => handleEditGood(good._id)}>
                       Edit
                     </button>
+                    
                     <button onClick={() => handleDeleteGood(good._id)}>
                       Delete
                     </button>
@@ -143,16 +157,26 @@ const GoodsDashboard = () => {
             value={newGood.name}
             onChange={handleInputChange}
             required
+            className="form-input"
           />
-          <input
-            type="number"
-            name="quantity"
-            placeholder="Quantity"
-            value={newGood.quantity}
-            onChange={handleInputChange}
-            min="1"
-            required
-          />
+
+          <div className="input-group">
+            <label htmlFor="quantity" className="input-label">
+              Quantity
+            </label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              placeholder="Quantity"
+              value={newGood.quantity}
+              onChange={handleInputChange}
+              min="1"
+              required
+              className="form-input"
+            />
+          </div>
+
           <input
             type="text"
             name="pickupLocation"
@@ -160,6 +184,7 @@ const GoodsDashboard = () => {
             value={newGood.pickupLocation || ""}
             onChange={handleInputChange}
             required
+            className="form-input"
           />
           <input
             type="text"
@@ -168,8 +193,11 @@ const GoodsDashboard = () => {
             value={newGood.dropoffLocation || ""}
             onChange={handleInputChange}
             required
+            className="form-input"
           />
-          <button type="submit">{isEditing ? "Update Good" : "Add Good"}</button>
+          <button type="submit" className="submit-button">
+            {isEditing ? "Update Good" : "Add Good"}
+          </button>
         </form>
       </div>
     </div>
