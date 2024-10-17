@@ -4,11 +4,16 @@ import {
   offerTransport,
   startDelivery,
   completeDelivery,
+  getOffersByGoods,
+  approveOffer,
+  rejectOffer,
 } from "../controllers/transporterController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
-
+router.get("/offers/:goodsId", protect, getOffersByGoods);
+router.put("/offer/approve/:transportId", protect, approveOffer);
+router.put("/offer/reject/:transportId", protect, rejectOffer);
 router.get("/available-goods", protect, getAvailableGoods);
 router.post("/offer/:goodsId", protect, offerTransport);
 router.put("/start-delivery/:transportId", protect, startDelivery);

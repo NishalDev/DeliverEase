@@ -84,5 +84,26 @@ const deleteGood = async (id) => {
     throw error;
   }
 };
-
-export default { getAllGoods, fetchGoods, addGood, updateGood, deleteGood };
+const getGoodStatus = async (goodId) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(`${API_URL}/${goodId}/status`, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching good status:", error);
+    throw error;
+  }
+};
+export default {
+  getAllGoods,
+  fetchGoods,
+  addGood,
+  updateGood,
+  deleteGood,
+  getGoodStatus,
+};

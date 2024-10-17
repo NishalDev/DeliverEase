@@ -3,7 +3,7 @@ import GoodsService from "../Services/GoodsService"; // Import the GoodsService
 //import "../css/main.css";
 import "../css/GoodsDashboard.css";
 import BackButton from "../components/BackButton";
-
+import { Link } from "react-router-dom";
 const GoodsDashboard = () => {
   const [goods, setGoods] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -101,6 +101,7 @@ const GoodsDashboard = () => {
       <BackButton />
       <h1>Goods Dashboard</h1>
       <div className="search-bar">
+      <Link to="/check-good-status" className="nav-link">Check Good Status</Link>
         <input
           type="text"
           placeholder="Search Goods..."

@@ -18,7 +18,6 @@ export const getAvailableGoods = async (req, res) => {
 };
 
 // Offer transport for a specific good
-// Offer transport for a specific good
 export const offerTransport = async (req, res) => {
   const transporterId = req.user._id; // Get the ID of the authenticated user
   const { goodsId } = req.params; // Get the goods ID from the URL parameters
@@ -70,7 +69,7 @@ export const offerTransport = async (req, res) => {
       capacity: transporter.capacity,
       currentLocation: transporter.currentLocation,
       trackingId: `TRK-${Date.now()}`, // Generate a unique tracking ID
-      status: "assigned",
+      status: "pendingOwnerApproval",
       deliveryCharge: deliveryCharge, // Pass the delivery charge
     });
 
@@ -125,6 +124,72 @@ export const completeDelivery = async (req, res) => {
     }
 
     return res.status(200).json({ message: "Delivery completed successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+// Get offers by goodsId
+export const getOffersByGoods = async (req, res) => {
+  const { goodsId } = req.params;
+
+  try {
+    // Find all transport offers for the specified goodsId
+    const offers = await Transport.find({ goods: goodsId }).populate(
+      "transporter",
+      "username email"
+    );
+
+    if (!offers || offers.length === 0) {
+      return res.status(404).json({ message: "No offers found for this good" });
+    }
+
+    return res.status(200).json(offers);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// Approve an offer for a specific good
+export const approveOffer = async (req, res) => {
+  const { transportId } = req.params; // Get the transport offer ID from the request parameters
+
+  try {
+    // Find the transport offer by ID
+    const transportOffer = await Transport.findById(transportId);
+    if (!transportOffer) {
+      return res.status(404).json({ message: "Offer not found" });
+    }
+
+    // Update the status of the offer to 'approved'
+    transportOffer.status = "approved";
+    await transportOffer.save();
+
+    return res
+      .status(200)
+      .json({ message: "Offer approved successfully", transportOffer });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// Reject an offer for a specific good
+export const rejectOffer = async (req, res) => {
+  const { transportId } = req.params; // Get the transport offer ID from the request parameters
+
+  try {
+    // Find the transport offer by ID
+    const transportOffer = await Transport.findById(transportId);
+    if (!transportOffer) {
+      return res.status(404).json({ message: "Offer not found" });
+    }
+
+    // Update the status of the offer to 'rejected'
+    transportOffer.status = "rejected";
+    await transportOffer.save();
+
+    return res
+      .status(200)
+      .json({ message: "Offer rejected successfully", transportOffer });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

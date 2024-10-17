@@ -59,11 +59,11 @@ const ServicesPage = () => {
       <section className="testimonial">
         <h3>What Our Clients Say</h3>
         <blockquote>
-          <p>"DeliverEase has transformed the way we manage our logistics. Their services are unmatched in reliability and efficiency!"</p>
+          <p>&quot;DeliverEase has transformed the way we manage our logistics. Their services are unmatched in reliability and efficiency!&quot;</p>
           <footer>- Jane Doe, Logistics Manager</footer>
         </blockquote>
         <blockquote>
-          <p>"The real-time tracking feature is a game changer. I can monitor my shipments effortlessly!"</p>
+          <p>&quot;The real-time tracking feature is a game changer. I can monitor my shipments effortlessly!&quot;</p>
           <footer>- John Smith, Business Owner</footer>
         </blockquote>
       </section>

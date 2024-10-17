@@ -33,5 +33,88 @@ const selectGood = async (id) => {
     throw error;
   }
 };
+const offerTransport = async (goodsId, data) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-export default { selectGood, getAllGoods };
+    // Make sure to include necessary fields like deliveryCharge and vehicleType in 'data'
+    const response = await axios.post(
+      `${API_URL}/offer/${goodsId}`,
+      data, // Data object must include required fields
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error offering transport:", error);
+    throw error;
+  }
+};
+const getOffersByGoods = async (goodsId) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(`${API_URL}/offers/${goodsId}`, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching offers:", error);
+    throw error;
+  }
+};
+
+const approveOffer = async (offerId) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.put(
+      `${API_URL}/offer/approve/${offerId}`,
+      {},
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error approving offer:", error);
+    throw error;
+  }
+};
+
+const rejectOffer = async (offerId) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.put(
+      `${API_URL}/offer/reject/${offerId}`,
+      {},
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error rejecting offer:", error);
+    throw error;
+  }
+};
+
+export default {
+  getOffersByGoods,
+  approveOffer,
+  rejectOffer,
+  offerTransport,
+  selectGood,
+  getAllGoods,
+};
