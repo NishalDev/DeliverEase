@@ -47,8 +47,16 @@ const transportSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pendingOwnerApproval", "assigned", "in-transit", "delivered"],
-      default: "pendingOwnerApproval", // Initial status waiting for goods owner approval
+      enum: [
+        "assigned",
+        "in-transit",
+        "delivered",
+        "approved",
+        "pendingOwnerApproval",
+        "rejected",
+        "cancelled",
+      ], // Add 'approved' to the enum values
+      default: "assigned", // Initial status waiting for goods owner approval
     },
   },
   { timestamps: true }

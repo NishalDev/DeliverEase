@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 //import TransportService from "../Services/TransportService"; // Use the same GoodsService for API calls
 import "../css/TransporterDashboard.css"; // Adjust the path according to your project structure
-
+import { useNavigate } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import TransportService from "../Services/TransportService.js";
 
 const TransporterDashboard = () => {
   const [goods, setGoods] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const navigate = useNavigate();
   // Fetch all goods from backend on component mount
   useEffect(() => {
     const fetchGoods = async () => {
@@ -30,17 +30,8 @@ const TransporterDashboard = () => {
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
   };
-  const handleSelectGood = async (id) => {
-    try {
-      const response = await TransportService.selectGood(id); // Await the API call
-      if (response) {
-        alert("You have selected the good for delivery!"); // Inform the transporter
-        setGoods(goods.filter((good) => good._id !== id)); // Remove the selected good from the list
-      }
-    } catch (error) {
-      console.error("Error selecting good:", error);
-      alert("There was an error selecting the good. Please try again."); // Notify the user in case of error
-    }
+  const handleSelectGood = (goodsId) => {
+    navigate(`/set-delivery-price/${goodsId}`);
   };
 
   return (

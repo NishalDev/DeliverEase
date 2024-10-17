@@ -193,3 +193,19 @@ export const respondToOffer = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+export const getGoodStatus = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const goods = await Goods.findById(id);
+
+    if (!goods) {
+      return res.status(404).json({ message: "Goods not found" });
+    }
+
+    return res.status(200).json({ status: goods.status });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};

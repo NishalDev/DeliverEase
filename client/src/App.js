@@ -11,7 +11,9 @@ import ManageDashboard from "./pages/ManageDashboard"; // ManageDashboard compon
 import RegisterPage from "./pages/RegisterPage"; // RegisterPage component
 import LoginPage from "./pages/LoginPage"; // LoginPage component
 import "./App.css"; // Import your CSS for styling
-
+import SetDeliveryPrice from "./pages/SetDeliveryPrice.js";
+import OfferApprovalPage from "./pages/OfferApprovalPage";
+import GoodStatus from "./pages/GoodStatus.js";
 const App = () => {
   useEffect(() => {
     const handleScroll = () => {
@@ -55,11 +57,17 @@ const App = () => {
           path="/transporter-dashboard"
           element={<TransporterDashboard />}
         />{" "}
+        <Route
+          path="/set-delivery-price/:goodsId"
+          element={<SetDeliveryPrice />}
+        />
+        <Route path="/offers/:goodsId" element={<OfferApprovalPage />} />
         {/* Transporter dashboard */}
         <Route path="/payment" element={<PaymentPage />} /> {/* Payment page */}
         <Route path="/services" element={<ServicesPage />} />{" "}
         {/* Services page */}
         <Route path="/dashboard" element={<Dashboard />} />{" "}
+        <Route path="/check-good-status" element={<GoodStatus />} />
         {/* General dashboard */}
         <Route path="/manage" element={<ManageDashboard />} />{" "}
         {/* Manage dashboard */}

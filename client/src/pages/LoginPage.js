@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AuthService from "../Services/AuthService.js";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import { useNavigate, Link } from "react-router-dom"; // Import useNavigate
+import "../css/main.css";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,19 +37,32 @@ const LoginPage = () => {
       {error && <div className="error-message">{error}</div>}{" "}
       {/* Show error message if any */}
       <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
+        <div className="form-group">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
+          />
+        </div>
+        <button type="submit" className="btn">
+          Register
+        </button>
+        <p className="redirect-redirect">
+          Don&apos;t have an account? <Link to="/register">Register here</Link>
+        </p>
       </form>
     </div>
   );
