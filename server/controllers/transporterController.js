@@ -194,3 +194,18 @@ export const rejectOffer = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+export const getOfferStatus = async (req, res) => {
+  const { offerId } = req.params;
+
+  try {
+    const offer = await Transport.findById(offerId);
+    if (!offer) {
+      return res.status(404).json({ message: "Offer not found" });
+    }
+
+    return res.status(200).json({ status: offer.status });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};

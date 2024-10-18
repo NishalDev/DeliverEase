@@ -110,7 +110,28 @@ const rejectOffer = async (offerId) => {
   }
 };
 
+const getOfferStatus = async (offerId) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios.get(
+      `${API_URL}/offer-status/${offerId}`,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching offer status:", error);
+    throw error;
+  }
+};
+
 export default {
+  getOfferStatus,
   getOffersByGoods,
   approveOffer,
   rejectOffer,
