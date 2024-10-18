@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 //import TransportService from "../Services/TransportService"; // Use the same GoodsService for API calls
 import "../css/TransporterDashboard.css"; // Adjust the path according to your project structure
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import BackButton from "../components/BackButton";
 import TransportService from "../Services/TransportService.js";
 
@@ -37,8 +37,12 @@ const TransporterDashboard = () => {
   return (
     <div className="transporter-dashboard">
       <BackButton />
+
       <h1>Available Goods for Transport</h1>
       <div className="search-bar">
+        <Link to="/check-transport-status" className="nav-link">
+          Check Transport Status
+        </Link>
         <input
           type="text"
           placeholder="Search Goods..."
