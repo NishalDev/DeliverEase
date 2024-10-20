@@ -129,8 +129,40 @@ const getOfferStatus = async (offerId) => {
     throw error;
   }
 };
+const getAllOffersForTransporter = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
+    const response = await axios.get(`${API_URL}/my-offers`, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching transport offers:", error);
+    throw error;
+  }
+};
+const getOfferById = async (offerId) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios.get(`${API_URL}/offer/${offerId}`, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching transport offer:", error);
+    throw error;
+  }
+};
 export default {
+  getAllOffersForTransporter,
   getOfferStatus,
   getOffersByGoods,
   approveOffer,
@@ -138,4 +170,5 @@ export default {
   offerTransport,
   selectGood,
   getAllGoods,
+  getOfferById,
 };
