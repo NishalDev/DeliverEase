@@ -12,9 +12,10 @@ import RegisterPage from "./pages/RegisterPage"; // RegisterPage component
 import LoginPage from "./pages/LoginPage"; // LoginPage component
 import "./App.css"; // Import your CSS for styling
 import SetDeliveryPrice from "./pages/SetDeliveryPrice.js";
-import OfferApprovalPage from "./pages/OfferApprovalPage";
+import OfferApprovalPage from "./pages/OfferApprovalPage.js";
 import GoodStatus from "./pages/GoodStatus.js";
 import TransporterStatus from "./pages/TransporterStatus.js";
+import TransportDetail from "./pages/TransportDetail.js";
 const App = () => {
   useEffect(() => {
     const handleScroll = () => {
@@ -70,6 +71,10 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />{" "}
         <Route path="/check-good-status" element={<GoodStatus />} />
         <Route path="/check-transport-status" element={<TransporterStatus />} />
+        <Route
+          path="/transport-detail/:offerId"
+          element={<TransportDetail />}
+        />
         {/* General dashboard */}
         <Route path="/manage" element={<ManageDashboard />} />{" "}
         {/* Manage dashboard */}

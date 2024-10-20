@@ -209,3 +209,38 @@ export const getOfferStatus = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+export const getAllOffersForTransporter = async (req, res) => {
+  const transporterId = req.user._id;
+
+  try {
+    const offers = await Transport.find({ transporter: transporterId })
+      .populate("goods", "name")
+      .populate("transporter", "username");
+
+    if (!offers.length) {
+      return res.status(404).json({ message: "No transport offers found" });
+    }
+
+    return res.status(200).json(offers);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+export const getOfferById = async (req, res) => {
+  const { offerId } = req.params; // Extract the offer ID from the URL
+
+  try {
+    // Find the transport offer by its ID and populate related fields (e.g., goods and transporter details)
+    const transportOffer = await Transport.findById(offerId)
+      .populate("goods", "name description")
+      .populate("transporter", "username email vehicleType");
+
+    if (!transportOffer) {
+      return res.status(404).json({ message: "Offer not found" });
+    }
+
+    return res.status(200).json(transportOffer);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
