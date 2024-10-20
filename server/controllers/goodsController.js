@@ -209,3 +209,29 @@ export const getGoodStatus = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+// Fetch all goods owned by the current user
+export const getOwnedGoods = async (req, res) => {
+  const ownerId = req.user._id; // Assuming `req.user` contains the authenticated user
+
+  try {
+    const ownedGoods = await Goods.find({ owner: ownerId });
+    return res.status(200).json(ownedGoods);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// Fetch goods that are currently in transport
+export const getGoodsInTransport = async (req, res) => {
+  const ownerId = req.user._id;
+
+  try {
+    const goodsInTransport = await Goods.find({
+      owner: ownerId,
+      status: { $in: ["in-progress", "in-transit"] },
+    });
+    return res.status(200).json(goodsInTransport);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};

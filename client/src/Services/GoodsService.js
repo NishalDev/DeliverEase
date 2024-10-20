@@ -99,7 +99,55 @@ const getGoodStatus = async (goodId) => {
     throw error;
   }
 };
+const fetchOwnedGoods = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(`${API_URL}/owned-goods`, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching owned goods:", error);
+    throw error;
+  }
+};
+const getOwnedGoodStatus = async (goodId) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(`${API_URL}/goods/${goodId}/status`, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching owned good status:", error);
+    throw error;
+  }
+};
+const getGoodsInTransport = async () => {
+  try {
+    const token = JSON.parse(localStorage.getItem("user")).token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(`${API_URL}/goods-in-transport`, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching goods in transport:", error);
+    throw error;
+  }
+};
 export default {
+  fetchOwnedGoods,
+  getOwnedGoodStatus,
+  getGoodsInTransport,
   getAllGoods,
   fetchGoods,
   addGood,

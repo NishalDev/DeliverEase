@@ -7,6 +7,8 @@ import {
   updateGoods,
   deleteGoods,
   getGoodStatus,
+  getOwnedGoods,
+  getGoodsInTransport,
 } from "../controllers/goodsController.js";
 //import upload from "../config/upload.js";
 import { protect } from "../middleware/authMiddleware.js";
@@ -20,4 +22,8 @@ router.get("/all", protect, getAllGoods);
 router.put("/:id", protect, updateGoods);
 router.delete("/:id", protect, deleteGoods);
 router.get("/:id/status", protect, getGoodStatus);
+router.get("/owned-goods", protect, getOwnedGoods);
+//router.get("/goods/:goodId/status", protect, getGoodStatus);
+router.get("/goods-in-transport", protect, getGoodsInTransport);
+
 export default router;

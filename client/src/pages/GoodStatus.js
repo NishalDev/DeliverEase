@@ -1,57 +1,77 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GoodsService from "../Services/GoodsService"; // Assuming GoodsService handles API calls
 
 const GoodStatus = () => {
-  const [goodId, setGoodId] = useState("");
-  const [status, setStatus] = useState(null);
+  const [goods, setGoods] = useState([]); // List of goods
+  const [selectedGood, setSelectedGood] = useState(null); // Selected good details
   const [error, setError] = useState("");
 
-  // Handle form submission to fetch the good status
-  const handleCheckStatus = async (e) => {
-    e.preventDefault();
+  // Fetch all goods owned by the user on component mount
+  useEffect(() => {
+    const fetchGoods = async () => {
+      try {
+        const goodsData = await GoodsService.fetchGoods(); // Fetch the list of goods
+        setGoods(goodsData);
+      } catch (err) {
+        setError("Failed to fetch goods. Please try again.");
+      }
+    };
+
+    fetchGoods();
+  }, []);
+
+  // Handle the selection of a good to display its details
+  const handleGoodClick = async (goodId) => {
     setError(""); // Reset error message
 
-    if (!goodId) {
-      setError("Please enter a valid good ID");
-      return;
-    }
-
     try {
-      const response = await GoodsService.getGoodStatus(goodId); // Fetch the status from the service
-      setStatus(response.status); // Assuming the response contains the status field
+      const response = await GoodsService.getGoodStatus(goodId); // Fetch good details
+      setSelectedGood(response); // Set the selected good details
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          "Failed to fetch the good status. Please try again."
+          "Failed to fetch the good details. Please try again."
       );
     }
   };
 
   return (
     <div className="good-status-page">
-      <h2>Check Good Status</h2>
-      <form onSubmit={handleCheckStatus}>
-        <div className="form-group">
-          <label htmlFor="goodId">Good ID</label>
-          <input
-            type="text"
-            id="goodId"
-            value={goodId}
-            onChange={(e) => setGoodId(e.target.value)}
-            placeholder="Enter the good ID"
-            required
-          />
-        </div>
-        <button type="submit" className="btn">
-          Check Status
-        </button>
-      </form>
+      <h2>Goods List</h2>
 
       {error && <div className="error-message">{error}</div>}
-      {status && (
-        <div className="status-info">
+
+      <div className="goods-list">
+        {goods.length > 0 ? (
+          <ul>
+            {goods.map((good) => (
+              <li key={good._id} onClick={() => handleGoodClick(good._id)}>
+                <button className="good-name-btn">{good.name}</button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No goods available</p>
+        )}
+      </div>
+
+      {selectedGood && (
+        <div className="good-details">
+          <h3>Good Details</h3>
           <p>
-            Status of Good (ID: {goodId}): <strong>{status}</strong>
+            <strong>Name:</strong> {selectedGood.name}
+          </p>
+          <p>
+            <strong>Quantity:</strong> {selectedGood.quantity}
+          </p>
+          <p>
+            <strong>Pickup Location:</strong> {selectedGood.pickupLocation}
+          </p>
+          <p>
+            <strong>Dropoff Location:</strong> {selectedGood.dropoffLocation}
+          </p>
+          <p>
+            <strong>Status:</strong> {selectedGood.status}
           </p>
         </div>
       )}
