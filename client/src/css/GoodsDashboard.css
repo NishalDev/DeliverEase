@@ -1,73 +1,66 @@
 .goods-dashboard {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  /* Light background for better contrast */
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  text-align: center;
+  background-color: #f5f7fa; /* Match background color */
+  min-height: 100vh; /* Ensure full height */
 }
 
-h1, h2 {
+.goods-dashboard h2 {
+  font-size: 32px;
   color: #333;
-  /* Dark color for headings */
-}
-
-.search-bar {
   margin-bottom: 20px;
+  font-weight: bold;
 }
 
-.search-bar input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.dashboard-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* Add gap between options */
+  flex-wrap: wrap;
+  margin-top: 40px;
 }
 
-.goods-list {
-  margin-bottom: 20px;
+.dashboard-option {
+  background-color: #ffffff; /* Change to white */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+  border-radius: 12px; /* Increase border-radius */
+  padding: 30px;
+  cursor: pointer;
+  width: 220px; /* Match width with transporter dashboard */
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s; /* Include transition effects */
 }
 
-/* Add this to your goodsDashboard.css */
-.goods-list button {
-  margin-right: 10px;
-  /* Space between buttons */
+.dashboard-option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced hover effect */
 }
 
-.goods-list button:last-child {
-  margin-right: 0;
-  /* Remove margin from the last button */
+.dashboard-option h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #007bff;
+  font-weight: 600;
 }
 
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
+.dashboard-option p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
 }
 
-th, td {
-  padding: 10px;
-  border: 1px solid #ccc;
-  text-align: left;
+.dashboard-option:hover h3 {
+  color: #0056b3; /* Darker shade on hover */
 }
 
-th {
-  background-color: #e2e2e2;
-  /* Light grey for table header */
+.input-group {
+  margin-bottom: 20px; /* Increase spacing */
 }
 
-tr:hover {
-  background-color: #f1f1f1;
-  /* Hover effect for table rows */
-}
-
-.add-good-form {
-  background-color: #fff;
-  /* White background for the form */
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.input-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .form-input {
@@ -78,50 +71,125 @@ tr:hover {
   border-radius: 5px;
 }
 
-.submit-button, .edit-button, .delete-button {
-  background-color: #007bff;
-  /* Primary button color */
+.good-status-page {
+  padding: 20px;
+  background-color: #f8f9fa; /* Light background color */
+}
+
+.good-status-page h2 {
+  font-size: 24px;
+  color: #343a40; /* Darker text for headings */
+}
+
+.goods-list {
+  margin-top: 20px; /* Add margin for separation */
+}
+
+.goods-list button {
+  margin-right: 10px;
+}
+
+.goods-list button:last-child {
+  margin-right: 0; /* Remove margin from the last button */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+th {
+  background-color: #e2e2e2; /* Light grey for table header */
+}
+
+tr:hover {
+  background-color: #f1f1f1; /* Hover effect for table rows */
+}
+
+h1,
+h2 {
+  color: #333; /* Dark color for headings */
+}
+
+.submit-button,
+.edit-button,
+.delete-button {
+  background-color: #007bff; /* Primary button color */
   color: #fff;
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s; /* Add transform transition */
   margin-right: 10px;
 }
 
 .submit-button:hover,
 .edit-button:hover,
 .delete-button:hover {
-  background-color: #0056b3;
-
-  /* Darker shade on hover */
+  background-color: #0056b3; /* Darker shade on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
-.input-group {
-  margin-bottom: 15px;
-  /* Spacing between input groups */
+/* Add a distinct style for edit and delete buttons */
+.edit-button {
+  background-color: #28a745; /* Green for edit */
 }
 
-.input-label {
-  display: block;
-  /* Make label block to occupy full width */
-  margin-bottom: 5px;
-  /* Space between label and input */
-  font-weight: bold;
-  /* Bold label for emphasis */
+.edit-button:hover {
+  background-color: #218838; /* Darker green on hover */
 }
 
-.quantity-input {
-  border: 2px solid #007bff;
-  /* Blue border for quantity field */
+.delete-button {
+  background-color: #dc3545; /* Red for delete */
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+.good-detail-page {
+  padding: 20px;
+  background-color: #f8f9fa; /* Light background color */
+}
+
+.good-info {
+  padding: 15px;
+  border: 1px solid #dee2e6; /* Border for the good info section */
   border-radius: 5px;
-  /* Rounded corners */
-  transition: border-color 0.3s;
-  /* Smooth transition for border color */
+  background-color: #fff; /* White background for the details */
 }
 
-.quantity-input:focus {
-  border-color: #0056b3;
-  /* Darker border color on focus */
+.good-info p {
+  font-size: 18px;
+  margin: 5px 0; /* Spacing between detail paragraphs */
+}
+
+.good-info strong {
+  color: #343a40; /* Darker text for labels */
+}
+
+.error-message {
+  color: #dc3545; /* Red color for error messages */
+  margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .dashboard-options {
+    flex-direction: column;
+    align-items: center; /* Center items in smaller screens */
+  }
+
+  .dashboard-option {
+    width: 80%; /* Adjust width for mobile */
+    margin-bottom: 20px; /* Space between options */
+  }
 }

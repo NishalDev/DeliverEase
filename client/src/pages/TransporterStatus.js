@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TransportService from "../Services/TransportService.js";
-
+import "../css/TransporterDashboard.css"; // Ensure the path is correct
+import BackButton from "../components/BackButton.js";
 const TransporterStatus = () => {
   const [offers, setOffers] = useState([]);
   const [error, setError] = useState("");
@@ -30,7 +31,8 @@ const TransporterStatus = () => {
   };
 
   return (
-    <div className="transporter-status-page">
+    <div className="transporter-dashboard">
+      <BackButton />
       <h2>Transport Offers</h2>
       {error && <div className="error-message">{error}</div>}
       {offers.length === 0 && !error && (
@@ -38,14 +40,14 @@ const TransporterStatus = () => {
       )}
       {offers.length > 0 && (
         <div className="offers-list">
-          <ul>
+          <ul className="offers-ul">
             {offers.map((offer) => (
               <li
                 key={offer._id}
                 onClick={() => handleGoodClick(offer._id)}
-                style={{ cursor: "pointer", color: "blue" }}
+                className="offer-item"
               >
-                <strong>Goods Name:</strong> {offer.goods?.name || "N/A"}
+                {offer.goods?.name || "N/A"}
               </li>
             ))}
           </ul>

@@ -16,6 +16,9 @@ import OfferApprovalPage from "./pages/OfferApprovalPage.js";
 import GoodStatus from "./pages/GoodStatus.js";
 import TransporterStatus from "./pages/TransporterStatus.js";
 import TransportDetail from "./pages/TransportDetail.js";
+import AddGood from "./pages/AddGoods.js";
+import OfferGood from "./pages/OfferGood.js";
+import GoodDetailPage from "./pages/GoodDetail.js";
 const App = () => {
   useEffect(() => {
     const handleScroll = () => {
@@ -55,6 +58,9 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} /> {/* Login route */}
         <Route path="/goods-dashboard" element={<GoodsDashboard />} />{" "}
         {/* Goods owner dashboard */}
+        <Route path="/add-good" element={<AddGood />} />
+        <Route path="/good-status" element={<GoodStatus />} />
+        <Route path="/goods/:goodId" element={<GoodDetailPage />} />
         <Route
           path="/transporter-dashboard"
           element={<TransporterDashboard />}
@@ -64,13 +70,12 @@ const App = () => {
           element={<SetDeliveryPrice />}
         />
         <Route path="/offers/:goodsId" element={<OfferApprovalPage />} />
-        {/* Transporter dashboard */}
         <Route path="/payment" element={<PaymentPage />} /> {/* Payment page */}
         <Route path="/services" element={<ServicesPage />} />{" "}
         {/* Services page */}
         <Route path="/dashboard" element={<Dashboard />} />{" "}
-        <Route path="/check-good-status" element={<GoodStatus />} />
-        <Route path="/check-transport-status" element={<TransporterStatus />} />
+        <Route path="/offer-good" element={<OfferGood />} />
+        <Route path="/transport-status" element={<TransporterStatus />} />
         <Route
           path="/transport-detail/:offerId"
           element={<TransportDetail />}
