@@ -3,7 +3,7 @@ import axios from "axios";
 // Define the API URL
 const API_URL = "http://localhost:5002/api/goods";
 
-// Function to fetch goods
+// Function to fetch goods of this user
 const fetchGoods = async () => {
   try {
     const token = JSON.parse(localStorage.getItem("user")).token;
@@ -19,6 +19,8 @@ const fetchGoods = async () => {
     throw error;
   }
 };
+
+//All goods in the db
 const getAllGoods = async () => {
   try {
     const token = JSON.parse(localStorage.getItem("user")).token;
@@ -68,6 +70,7 @@ const updateGood = async (id, goodData) => {
     throw error;
   }
 };
+
 const deleteGood = async (id) => {
   try {
     const token = JSON.parse(localStorage.getItem("user")).token;
@@ -84,6 +87,7 @@ const deleteGood = async (id) => {
     throw error;
   }
 };
+
 const getGoodStatus = async (goodId) => {
   try {
     const token = JSON.parse(localStorage.getItem("user")).token;
@@ -99,21 +103,22 @@ const getGoodStatus = async (goodId) => {
     throw error;
   }
 };
-const fetchOwnedGoods = async () => {
-  try {
-    const token = JSON.parse(localStorage.getItem("user")).token;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    const response = await axios.get(`${API_URL}/owned-goods`, config);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching owned goods:", error);
-    throw error;
-  }
-};
+
+// const fetchOwnedGoods = async () => {
+//   try {
+//     const token = JSON.parse(localStorage.getItem("user")).token;
+//     const config = {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     };
+//     const response = await axios.get(`${API_URL}/owned-goods`, config);
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error fetching owned goods:", error);
+//     throw error;
+//   }
+// };
 const getOwnedGoodStatus = async (goodId) => {
   try {
     const token = JSON.parse(localStorage.getItem("user")).token;
@@ -122,13 +127,17 @@ const getOwnedGoodStatus = async (goodId) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.get(`${API_URL}/goods/${goodId}/status`, config);
+    const response = await axios.get(
+      `${API_URL}/goods/${goodId}/status`,
+      config
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching owned good status:", error);
     throw error;
   }
 };
+
 const getGoodsInTransport = async () => {
   try {
     const token = JSON.parse(localStorage.getItem("user")).token;
@@ -145,7 +154,7 @@ const getGoodsInTransport = async () => {
   }
 };
 export default {
-  fetchOwnedGoods,
+  // fetchOwnedGoods,
   getOwnedGoodStatus,
   getGoodsInTransport,
   getAllGoods,

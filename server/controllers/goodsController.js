@@ -48,6 +48,8 @@ export const createGoods = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+//All goods
 export const getAllGoods = async (req, res) => {
   try {
     const goods = await Goods.find().populate("owner", "username email");
@@ -57,8 +59,9 @@ export const getAllGoods = async (req, res) => {
   }
 };
 
+//Goods of this user
 export const getGoods = async (req, res) => {
-  const userId = req.user._id; // Assuming req.user contains the logged-in user's ID
+  const userId = req.user._id;
 
   try {
     const goods = await Goods.find({ owner: userId }).populate(
@@ -80,6 +83,18 @@ export const getGoods = async (req, res) => {
 //       return res.status(404).json({ message: "Goods not found" });
 //     }
 //     return res.status(200).json(goods);
+//   } catch (error) {
+//     return res.status(500).json({ message: error.message });
+//   }
+// };
+
+// Fetch all goods owned by the current user
+// export const getOwnedGoods = async (req, res) => {
+//   const ownerId = req.user._id; // Assuming `req.user` contains the authenticated user
+
+//   try {
+//     const ownedGoods = await Goods.find({ owner: ownerId });
+//     return res.status(200).json(ownedGoods);
 //   } catch (error) {
 //     return res.status(500).json({ message: error.message });
 //   }
@@ -168,7 +183,7 @@ export const respondToOffer = async (req, res) => {
 
   try {
     // Find the transport offer by ID
-    console.log(offerId);
+    // console.log(offerId);
     const transportOffer = await Transport.findById(offerId).populate("goods");
 
     if (!transportOffer) {
@@ -204,18 +219,13 @@ export const getGoodStatus = async (req, res) => {
       return res.status(404).json({ message: "Goods not found" });
     }
 
-    return res.status(200).json({ status: goods.status });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-// Fetch all goods owned by the current user
-export const getOwnedGoods = async (req, res) => {
-  const ownerId = req.user._id; // Assuming `req.user` contains the authenticated user
-
-  try {
-    const ownedGoods = await Goods.find({ owner: ownerId });
-    return res.status(200).json(ownedGoods);
+    return res.status(200).json({
+      status: goods.status,
+      name: goods.name,
+      quantity: goods.quantity,
+      pickupLocation: goods.pickupLocation,
+      dropoffLocation: goods.dropoffLocation,
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

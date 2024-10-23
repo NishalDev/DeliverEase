@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import GoodsService from "../Services/GoodsService"; // Assuming GoodsService handles API calls
+import "../css/GoodsDashboard.css"; // Import CSS file
 
 const GoodStatus = () => {
   const [goods, setGoods] = useState([]); // List of goods
-  const [selectedGood, setSelectedGood] = useState(null); // Selected good details
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // Initialize navigate
 
   // Fetch all goods owned by the user on component mount
   useEffect(() => {
@@ -20,19 +22,9 @@ const GoodStatus = () => {
     fetchGoods();
   }, []);
 
-  // Handle the selection of a good to display its details
-  const handleGoodClick = async (goodId) => {
-    setError(""); // Reset error message
-
-    try {
-      const response = await GoodsService.getGoodStatus(goodId); // Fetch good details
-      setSelectedGood(response); // Set the selected good details
-    } catch (err) {
-      setError(
-        err.response?.data?.message ||
-          "Failed to fetch the good details. Please try again."
-      );
-    }
+  // Handle the selection of a good to redirect to its detail page
+  const handleGoodClick = (goodId) => {
+    navigate(`/goods/${goodId}`); // Navigate to GoodDetailPage
   };
 
   return (
@@ -54,27 +46,6 @@ const GoodStatus = () => {
           <p>No goods available</p>
         )}
       </div>
-
-      {selectedGood && (
-        <div className="good-details">
-          <h3>Good Details</h3>
-          <p>
-            <strong>Name:</strong> {selectedGood.name}
-          </p>
-          <p>
-            <strong>Quantity:</strong> {selectedGood.quantity}
-          </p>
-          <p>
-            <strong>Pickup Location:</strong> {selectedGood.pickupLocation}
-          </p>
-          <p>
-            <strong>Dropoff Location:</strong> {selectedGood.dropoffLocation}
-          </p>
-          <p>
-            <strong>Status:</strong> {selectedGood.status}
-          </p>
-        </div>
-      )}
     </div>
   );
 };

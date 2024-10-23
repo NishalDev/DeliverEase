@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TransportService from "../Services/TransportService.js";
+import BackButton from "../components/BackButton.js";
+import "../css/TransporterDashboard.css"; // Ensure the path is correct
 
 const TransportDetail = () => {
   const { offerId } = useParams(); // Get the offer ID from the URL parameters
@@ -25,19 +27,36 @@ const TransportDetail = () => {
   }, [offerId]);
 
   return (
-    <div className="transport-detail-page">
+    <div className="transporter-dashboard">
+      <BackButton/>
       <h2>Transport Offer Details</h2>
       {error && <div className="error-message">{error}</div>}
       {offerDetails ? (
         <div className="offer-info">
-          <p><strong>Goods Name:</strong> {offerDetails.goods?.name}</p>
-          <p><strong>Status:</strong> {offerDetails.status}</p>
-          <p><strong>Delivery Charge:</strong> {offerDetails.deliveryCharge}</p>
-          <p><strong>Vehicle Type:</strong> {offerDetails.vehicleType}</p>
-          <p><strong>Tracking ID:</strong> {offerDetails.trackingId}</p>
-          <p><strong>Current Location:</strong> {offerDetails.currentLocation || "Not available"}</p>
-          <p><strong>Delivery Start Time:</strong> {offerDetails.deliveryStartTime ? new Date(offerDetails.deliveryStartTime).toLocaleString() : "Not started"}</p>
-          <p><strong>Delivery End Time:</strong> {offerDetails.deliveryEndTime ? new Date(offerDetails.deliveryEndTime).toLocaleString() : "Not completed"}</p>
+          <div className="offer-detail-item">
+            <strong>Goods Name:</strong> {offerDetails.goods?.name}
+          </div>
+          <div className="offer-detail-item">
+            <strong>Status:</strong> {offerDetails.status}
+          </div>
+          <div className="offer-detail-item">
+            <strong>Delivery Charge:</strong> {offerDetails.deliveryCharge}
+          </div>
+          <div className="offer-detail-item">
+            <strong>Vehicle Type:</strong> {offerDetails.vehicleType}
+          </div>
+          <div className="offer-detail-item">
+            <strong>Tracking ID:</strong> {offerDetails.trackingId}
+          </div>
+          <div className="offer-detail-item">
+            <strong>Current Location:</strong> {offerDetails.currentLocation || "Not available"}
+          </div>
+          <div className="offer-detail-item">
+            <strong>Delivery Start Time:</strong> {offerDetails.deliveryStartTime ? new Date(offerDetails.deliveryStartTime).toLocaleString() : "Not started"}
+          </div>
+          <div className="offer-detail-item">
+            <strong>Delivery End Time:</strong> {offerDetails.deliveryEndTime ? new Date(offerDetails.deliveryEndTime).toLocaleString() : "Not completed"}
+          </div>
         </div>
       ) : (
         !error && <p>Loading transport details...</p>

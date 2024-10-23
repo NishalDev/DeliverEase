@@ -1,106 +1,175 @@
+/* TransporterDashboard.css */
+
 .transporter-dashboard {
-  padding: 20px;
-  /* Space inside the dashboard */
-  background-color: #f9f9f9;
-  /* Light background for the dashboard */
-  border-radius: 8px;
-  /* Rounded corners for the dashboard */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  /* Subtle shadow effect */
+  padding: 40px;
+  text-align: center;
+  background-color: #f5f7fa;
+  min-height: 100vh;
 }
 
-h1 {
-  font-size: 2em;
-  /* Main title size */
-  margin-bottom: 20px;
-  /* Space below the title */
+.transporter-dashboard h2 {
+  font-size: 32px;
   color: #333;
-  /* Dark color for better readability */
-}
-
-.search-bar {
   margin-bottom: 20px;
-  /* Space below the search bar */
-}
-
-.search-bar input {
-  width: 100%;
-  /* Full width for the input */
-  padding: 10px;
-  /* Space inside the input */
-  border: 1px solid #ccc;
-  /* Light border for the input */
-  border-radius: 4px;
-  /* Rounded corners for the input */
-  transition: border-color 0.3s;
-  /* Smooth transition for border color */
-}
-
-.search-bar input:focus {
-  border-color: #007bff;
-  /* Change border color on focus */
-}
-
-.goods-list {
-  margin-top: 20px;
-  /* Space above the goods list */
-}
-
-.goods-list h2 {
-  font-size: 1.5em;
-  /* Size for the goods list heading */
-  margin-bottom: 10px;
-  /* Space below the heading */
-  color: #555;
-  /* Slightly lighter color for the heading */
-}
-
-table {
-  width: 100%;
-  /* Full width for the table */
-  border-collapse: collapse;
-  /* Collapse borders */
-}
-
-th, td {
-  padding: 12px;
-  /* Space inside the table cells */
-  border: 1px solid #ccc;
-  /* Light border for table cells */
-  text-align: left;
-  /* Left align text in cells */
-}
-
-th {
-  background-color: #f2f2f2;
-  /* Light gray background for headers */
   font-weight: bold;
-  /* Bold font for headers */
 }
 
-td {
-  background-color: #fff;
-  /* White background for data cells */
+.dashboard-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 40px;
 }
 
-button {
-  padding: 10px 15px;
-  /* Space inside buttons */
-  background-color: #007bff;
-  /* Blue background for buttons */
-  color: white;
-  /* White text color */
-  border: none;
-  /* No border */
-  border-radius: 4px;
-  /* Rounded corners */
+.dashboard-option {
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 30px;
   cursor: pointer;
-  /* Pointer cursor on hover */
-  transition: background-color 0.3s;
-  /* Smooth transition for background color */
+  width: 220px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-button:hover {
-  background-color: #ffd500;
-  /* Darker blue on hover */
+.dashboard-option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-option h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.dashboard-option p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.dashboard-option:hover h3 {
+  color: #0056b3;
+}
+
+/* Table Styles */
+.transporter-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 40px;
+}
+
+.transporter-table th,
+.transporter-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.transporter-table th {
+  background-color: #e2e2e2;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
+
+.transporter-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.transporter-table tr:hover {
+  background-color: #e0e0e0;
+}
+
+/* Button Styles */
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.offers-ul {
+  list-style-type: none;
+  /* Remove default list styling */
+  padding: 0;
+  /* Remove default padding */
+  margin-top: 20px;
+  /* Add spacing above the list */
+}
+
+.offer-item {
+  background-color: #ffffff;
+  /* Background color for each offer item */
+  border: 1px solid #ddd;
+  /* Light border around each item */
+  border-radius: 8px;
+  /* Rounded corners */
+  padding: 15px;
+  /* Padding for better spacing */
+  margin: 10px 0;
+  /* Spacing between items */
+  cursor: pointer;
+  /* Change cursor to pointer */
+  transition: background-color 0.3s, transform 0.3s;
+  /* Transition effects */
+}
+
+.offer-item:hover {
+  background-color: #f0f0f0;
+  /* Change background on hover */
+  transform: translateY(-2px);
+  /* Slight lift on hover */
+}
+
+.offer-info {
+  background-color: #ffffff;
+  /* White background for the offer details */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Shadow for depth */
+  border-radius: 12px;
+  /* Rounded corners */
+  padding: 20px;
+  /* Padding for spacing */
+  margin-top: 20px;
+  /* Space above the offer info */
+}
+
+.offer-detail-item {
+  margin-bottom: 10px;
+  /* Space between each detail */
+  font-size: 16px;
+  /* Font size for details */
+  color: #333;
+  /* Text color */
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  /* Error text color */
+  margin-top: 10px;
+  /* Spacing above error message */
+}
+
+
+@media (max-width: 768px) {
+  .dashboard-options {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-option {
+    width: 80%;
+    margin-bottom: 20px;
+  }
 }
