@@ -1,7 +1,8 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../css/GoodsDashboard.css"; // Assuming you will style the page with this file
 import BackButton from "../components/BackButton";
+
 const GoodsDashboard = () => {
   const navigate = useNavigate();
 
@@ -21,6 +22,7 @@ const GoodsDashboard = () => {
   return (
     <div className="goods-dashboard">
       <BackButton />
+      <Link to="/notifications">Notifications</Link>
       <h2>Goods Dashboard</h2>
       <div className="dashboard-options">
         <div className="dashboard-option" onClick={navigateToAddGood}>
