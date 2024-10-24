@@ -1,6 +1,7 @@
 import Goods from "../models/Goods.js";
 import User from "../models/User.js";
 import Transport from "../models/Transporter.js";
+import Notification from "../models/Notification.js";
 //import fs from "fs";
 export const createGoods = async (req, res) => {
   const {
@@ -241,6 +242,59 @@ export const getGoodsInTransport = async (req, res) => {
       status: { $in: ["in-progress", "in-transit"] },
     });
     return res.status(200).json(goodsInTransport);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const acceptOffer = async (req, res) => {
+  const { offerId } = req.params;
+
+  try {
+    const transportOffer = await Transport.findById(offerId);
+
+    if (!transportOffer || transportOffer.status !== "pendingOwnerApproval") {
+      return res.status(404).json({ message: "Offer not found or already processed" });
+    }
+
+    transportOffer.status = "approved";
+    await transportOffer.save();
+
+    // Send notification to the transporter
+    const notification = new Notification({
+      user: transportOffer.transporter,
+      message: `Your offer for transporting goods with tracking ID ${transportOffer.trackingId} has been accepted.`,
+    });
+    await notification.save();
+
+    return res.status(200).json({ message: "Offer accepted successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// Function to reject an offer
+export const rejectOffer = async (req, res) => {
+  const { offerId } = req.params;
+
+  try {
+    const transportOffer = await Transport.findById(offerId);
+
+    if (!transportOffer || transportOffer.status !== "pendingOwnerApproval") {
+      return res.status(404).json({ message: "Offer not found or already processed" });
+    }
+
+    transportOffer.status = "rejected";
+    await transportOffer.save();
+
+    // Send notification to the transporter
+    const notification = new Notification({
+      user: transportOffer.transporter,
+      message: `Your offer for transporting goods with tracking ID ${transportOffer.trackingId} has been rejected.`,
+    });
+    await notification.save();
+
+    return res.status(200).json({ message: "Offer rejected successfully" });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

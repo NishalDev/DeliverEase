@@ -19,6 +19,7 @@ import TransportDetail from "./pages/TransportDetail.js";
 import AddGood from "./pages/AddGoods.js";
 import OfferGood from "./pages/OfferGood.js";
 import GoodDetailPage from "./pages/GoodDetail.js";
+import Notifications from "./components/Notification.js";
 const App = () => {
   useEffect(() => {
     const handleScroll = () => {
@@ -80,6 +81,7 @@ const App = () => {
           path="/transport-detail/:offerId"
           element={<TransportDetail />}
         />
+        <Route path="/notifications" element={<Notifications />} />
         {/* General dashboard */}
         <Route path="/manage" element={<ManageDashboard />} />{" "}
         {/* Manage dashboard */}
