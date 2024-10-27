@@ -29,6 +29,7 @@ const notificationSchema = new mongoose.Schema(
     relatedGood: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Goods",
+      required: true,
     },
   },
   { timestamps: true }
