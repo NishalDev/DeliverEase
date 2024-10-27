@@ -1,6 +1,8 @@
 // Notifications.js
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import NotificationService from "../Services/NotificationService";
+import "../css/Notification.css";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -17,7 +19,8 @@ const Notifications = () => {
       setNotifications(data);
     } catch (err) {
       setError(
-        err.response?.data?.message || "Failed to fetch notifications. Please try again."
+        err.response?.data?.message ||
+          "Failed to fetch notifications. Please try again."
       );
     }
   };
@@ -33,14 +36,25 @@ const Notifications = () => {
   };
 
   return (
-    <div className="notifications">
+    <div className="notifications-container">
       <h2>Notifications</h2>
       {error && <div className="error-message">{error}</div>}
-      <ul>
+      <ul className="notification-list">
         {notifications.map((notification) => (
-          <li key={notification._id}>
-            <p>{notification.message}</p>
-            <button onClick={() => handleMarkAsRead(notification._id)}>Mark as Read</button>
+          <li key={notification._id} className="notification-item">
+           
+            <Link
+              to={`/offers/${notification.relatedGood}`}
+              className="notification-link"
+            >
+              <span className="notification-message">{notification.message}</span>
+            </Link>
+            <button
+              className="mark-as-read"
+              onClick={() => handleMarkAsRead(notification._id)}
+            >
+              Mark as Read
+            </button>
           </li>
         ))}
       </ul>

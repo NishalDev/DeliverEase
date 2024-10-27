@@ -1,0 +1,56 @@
+/* Notification.css */
+.notifications-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.notification-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-message {
+    font-size: 16px;
+    line-height: 1.4;
+    flex: 1;
+}
+
+.mark-as-read {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-left: 15px;
+}
+
+.mark-as-read:hover {
+    background-color: #0056b3;
+}
+
+.notification-link {
+    text-decoration: none;
+    color: #333;
+    flex: 1;
+}
+
+.notification-link:hover {
+    text-decoration: underline;
+}

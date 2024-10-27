@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import TransportService from "../Services/TransportService.js"; // Import TransportService for API calls
 import { useParams } from "react-router-dom";
+import "../css/OfferApprovalPage.css"; // Assuming you have a CSS file for custom styles
 
 const OfferApprovalPage = () => {
   const [offers, setOffers] = useState([]);
@@ -46,7 +47,7 @@ const OfferApprovalPage = () => {
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return <p className="error-message">{error}</p>;
 
   return (
     <div className="offer-approval-page">
@@ -54,35 +55,43 @@ const OfferApprovalPage = () => {
       {offers.length === 0 ? (
         <p>No offers available for this goods.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Transporter</th>
-              <th>Vehicle Type</th>
-              <th>Delivery Charge</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {offers.map((offer) => (
-              <tr key={offer._id}>
-                <td>{offer.transporter.username}</td>
-                <td>{offer.vehicleType}</td>
-                <td>${offer.deliveryCharge}</td>
-                <td>{offer.status}</td>
-                <td>
-                  <button onClick={() => handleApprove(offer._id)}>
-                    Approve
-                  </button>
-                  <button onClick={() => handleReject(offer._id)}>
-                    Reject
-                  </button>
-                </td>
+        <div className="table-container">
+          <table className="offer-table">
+            <thead>
+              <tr>
+                <th>Transporter</th>
+                <th>Vehicle Type</th>
+                <th>Delivery Charge</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {offers.map((offer) => (
+                <tr key={offer._id}>
+                  <td>{offer.transporter.username}</td>
+                  <td>{offer.vehicleType}</td>
+                  <td>${offer.deliveryCharge}</td>
+                  <td className={`status ${offer.status}`}>{offer.status}</td>
+                  <td>
+                    <button
+                      className="approve-button"
+                      onClick={() => handleApprove(offer._id)}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      className="reject-button"
+                      onClick={() => handleReject(offer._id)}
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
