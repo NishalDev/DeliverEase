@@ -23,10 +23,10 @@ export const getNotifications = async (req, res) => {
   const userId = req.user._id;
 
   try {
-    const notifications = await Notification.find({ recipient: userId })
+    const notifications = await Notification.find({ recipient: userId, isRead: false })
       .sort({ createdAt: -1 })
       .populate("sender", "username")
-      .populate("relatedGood", "name");
+      .populate("relatedGood", "name _id");
 
     return res.status(200).json(notifications);
   } catch (error) {

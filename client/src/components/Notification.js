@@ -44,7 +44,7 @@ const Notifications = () => {
           <li key={notification._id} className="notification-item">
            
             <Link
-              to={`/offers/${notification.relatedGood}`}
+              to={`/offers/${notification.relatedGood?._id}`}
               className="notification-link"
             >
               <span className="notification-message">{notification.message}</span>

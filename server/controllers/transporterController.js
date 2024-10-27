@@ -371,7 +371,9 @@ export const offerTransport = async (req, res) => {
       sender: transporterId,
       recipient: goods.owner,
       message: `A transporter has offered to deliver your goods with a charge of ${deliveryCharge}. Tracking ID: ${transportOffer.trackingId}.`,
+      relatedGood: goodsId,
     });
+
     await notification.save();
 
     return res.status(201).json(transportOffer);
