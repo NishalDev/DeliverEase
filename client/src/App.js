@@ -20,6 +20,8 @@ import AddGood from "./pages/AddGoods.js";
 import OfferGood from "./pages/OfferGood.js";
 import GoodDetailPage from "./pages/GoodDetail.js";
 import Notifications from "./components/Notification.js";
+//import PaymentPage from "./pages/PaymentPage.js";  // Ensuring this is imported only once
+
 const App = () => {
   useEffect(() => {
     const handleScroll = () => {
@@ -50,41 +52,26 @@ const App = () => {
 
   return (
     <Router>
-      <Navigation />{" "}
-      {/* Navigation bar should be consistent across all routes */}
+      <Navigation /> {/* Navigation bar should be consistent across all routes */}
       <Routes>
         <Route path="/" element={<Homepage />} /> {/* Homepage route */}
-        <Route path="/register" element={<RegisterPage />} />{" "}
-        {/* Register route */}
+        <Route path="/register" element={<RegisterPage />} /> {/* Register route */}
         <Route path="/login" element={<LoginPage />} /> {/* Login route */}
-        <Route path="/goods-dashboard" element={<GoodsDashboard />} />{" "}
-        {/* Goods owner dashboard */}
+        <Route path="/goods-dashboard" element={<GoodsDashboard />} /> {/* Goods owner dashboard */}
         <Route path="/add-good" element={<AddGood />} />
         <Route path="/good-status" element={<GoodStatus />} />
         <Route path="/goods/:goodId" element={<GoodDetailPage />} />
-        <Route
-          path="/transporter-dashboard"
-          element={<TransporterDashboard />}
-        />{" "}
-        <Route
-          path="/set-delivery-price/:goodsId"
-          element={<SetDeliveryPrice />}
-        />
+        <Route path="/transporter-dashboard" element={<TransporterDashboard />} />
+        <Route path="/set-delivery-price/:goodsId" element={<SetDeliveryPrice />} />
         <Route path="/offers/:goodsId" element={<OfferApprovalPage />} />
         <Route path="/payment" element={<PaymentPage />} /> {/* Payment page */}
-        <Route path="/services" element={<ServicesPage />} />{" "}
-        {/* Services page */}
-        <Route path="/dashboard" element={<Dashboard />} />{" "}
+        <Route path="/services" element={<ServicesPage />} /> {/* Services page */}
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/offer-good" element={<OfferGood />} />
         <Route path="/transport-status" element={<TransporterStatus />} />
-        <Route
-          path="/transport-detail/:offerId"
-          element={<TransportDetail />}
-        />
+        <Route path="/transport-detail/:offerId" element={<TransportDetail />} />
         <Route path="/notifications" element={<Notifications />} />
-        {/* General dashboard */}
-        <Route path="/manage" element={<ManageDashboard />} />{" "}
-        {/* Manage dashboard */}
+        <Route path="/manage" element={<ManageDashboard />} /> {/* Manage dashboard */}
       </Routes>
       {/* Additional Sections for Scrolling */}
       <div className="section" id="hero">

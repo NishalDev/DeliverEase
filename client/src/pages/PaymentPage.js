@@ -1,125 +1,79 @@
-import React, { useState } from 'react';
-import '../css/main.css'; // Import the CSS file
-import BackButton from '../components/BackButton';
-
-const initialTransactions = [
-  { id: 1, date: '2024-09-15', amount: 5000, status: 'Completed', method: 'Credit Card' },
-  { id: 2, date: '2024-09-20', amount: 2000, status: 'Pending', method: 'Bank Transfer' },
-  { id: 3, date: '2024-09-25', amount: 1500, status: 'Completed', method: 'UPI' },
-];
+import React, { useState } from "react";
+import '../css/PaymentPage.css'; // Optional: Your CSS styling
 
 const PaymentPage = () => {
-  const [transactions, setTransactions] = useState(initialTransactions);
-  const [paymentDetails, setPaymentDetails] = useState({ amount: '', method: 'Credit Card', cardNumber: '', expiry: '', cvv: '' });
-  const [showTransactionHistory, setShowTransactionHistory] = useState(true);
+  const [paymentStatus, setPaymentStatus] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState("");
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setPaymentDetails({ ...paymentDetails, [name]: value });
+  const handleAmountChange = (e) => {
+    setAmount(e.target.value);
   };
 
-  const handlePaymentSubmit = (e) => {
-    e.preventDefault();
-    const newTransaction = {
-      id: transactions.length + 1,
-      date: new Date().toLocaleDateString(),
-      amount: paymentDetails.amount,
-      status: 'Completed',
-      method: paymentDetails.method,
-    };
-    setTransactions([...transactions, newTransaction]);
-    setPaymentDetails({ amount: '', method: 'Credit Card', cardNumber: '', expiry: '', cvv: '' });
+  const handlePaymentMethodChange = (e) => {
+    setPaymentMethod(e.target.value);
+  };
+
+  const handlePayment = async () => {
+    try {
+      if (amount <= 0) {
+        alert("Please enter a valid amount");
+        return;
+      }
+
+      // Call your backend API to initiate payment
+      const response = await fetch("http://localhost:5000/api/payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount,
+          paymentMethod,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setPaymentStatus("Payment Successful!");
+      } else {
+        setPaymentStatus("Payment Failed!");
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      setPaymentStatus("An error occurred during the payment process.");
+    }
   };
 
   return (
     <div className="payment-page">
-      <BackButton /> {/* Add the Back Button here */}
-      <h1>Payment Page</h1>
-
-      <div className="payment-summary">
-        <h2>Outstanding Balance</h2>
-        <p>$3,500</p> {/* Replace with dynamic outstanding balance data */}
-      </div>
-
-      <div className="payment-method-form">
-        <h2>Make a Payment</h2>
-        <form onSubmit={handlePaymentSubmit}>
+      <h2>Payment Page</h2>
+      <div className="payment-form">
+        <label>
+          Amount:
           <input
             type="number"
-            name="amount"
-            placeholder="Enter Amount"
-            value={paymentDetails.amount}
-            onChange={handleInputChange}
-            required
+            value={amount}
+            onChange={handleAmountChange}
+            min="1"
+            placeholder="Enter amount"
           />
-          
-          <select name="method" value={paymentDetails.method} onChange={handleInputChange}>
-            <option value="Credit Card">Credit Card</option>
-            <option value="Debit Card">Debit Card</option>
-            <option value="UPI">UPI</option>
-            <option value="Bank Transfer">Bank Transfer</option>
+        </label>
+
+        <label>
+          Payment Method:
+          <select value={paymentMethod} onChange={handlePaymentMethodChange}>
+            <option value="stripe">Stripe</option>
+            <option value="paypal">PayPal</option>
           </select>
-          
-          {paymentDetails.method === 'Credit Card' || paymentDetails.method === 'Debit Card' ? (
-            <>
-              <input
-                type="text"
-                name="cardNumber"
-                placeholder="Card Number"
-                value={paymentDetails.cardNumber}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="expiry"
-                placeholder="Expiry (MM/YY)"
-                value={paymentDetails.expiry}
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="cvv"
-                placeholder="CVV"
-                value={paymentDetails.cvv}
-                onChange={handleInputChange}
-                required
-              />
-            </>
-          ) : null}
+        </label>
 
-          <button type="submit">Pay Now</button>
-        </form>
-      </div>
+        <button onClick={handlePayment}>Pay Now</button>
 
-      <div className="transaction-history">
-        <h2>Transaction History</h2>
-        <button onClick={() => setShowTransactionHistory(!showTransactionHistory)}>
-          {showTransactionHistory ? 'Hide' : 'Show'} Transaction History
-        </button>
-        {showTransactionHistory && (
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Method</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction) => (
-                <tr key={transaction.id}>
-                  <td>{transaction.date}</td>
-                  <td>${transaction.amount}</td>
-                  <td>{transaction.status}</td>
-                  <td>{transaction.method}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+        <div className="payment-status">
+          {paymentStatus && <p>{paymentStatus}</p>}
+        </div>
       </div>
     </div>
   );
