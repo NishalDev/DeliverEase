@@ -8,6 +8,7 @@
   "dependencies": {
     "multer": "^1.4.5-lts.1",
     "path": "^0.12.7",
+    "razorpay": "^2.9.5",
     "three": "^0.169.0",
     "web3": "^4.15.0"
   }

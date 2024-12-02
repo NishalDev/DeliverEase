@@ -62,8 +62,16 @@ const getOffersByGoods = async (goodsId) => {
         Authorization: `Bearer ${token}`,
       },
     };
+
     const response = await axios.get(`${API_URL}/offers/${goodsId}`, config);
-    return response.data;
+    // Populating the goodName (and other details) from the Goods collection
+    return response.data.map((offer) => ({
+      ...offer,
+      goods: {
+        ...offer.goods,
+        name: offer.goods.name, // Now we have the goodName
+      },
+    }));
   } catch (error) {
     console.error("Error fetching offers:", error);
     throw error;

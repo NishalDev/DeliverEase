@@ -1,80 +1,81 @@
-import React, { useState } from "react";
-import '../css/PaymentPage.css'; // Optional: Your CSS styling
-
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+const API_URL = "http://localhost:5002/api/payment";
 const PaymentPage = () => {
-  const [paymentStatus, setPaymentStatus] = useState("");
-  const [amount, setAmount] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState("");
+  const location = useLocation();
+  const { deliveryCharge, goodsId, goodName } = location.state || {};
+  console.log(goodName);
 
-  const handleAmountChange = (e) => {
-    setAmount(e.target.value);
-  };
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handlePaymentMethodChange = (e) => {
-    setPaymentMethod(e.target.value);
-  };
-
-  const handlePayment = async () => {
-    try {
-      if (amount <= 0) {
-        alert("Please enter a valid amount");
-        return;
-      }
-
-      // Call your backend API to initiate payment
-      const response = await fetch("http://localhost:5000/api/payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount,
-          paymentMethod,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setPaymentStatus("Payment Successful!");
-      } else {
-        setPaymentStatus("Payment Failed!");
-      }
-    } catch (error) {
-      console.error("Payment error:", error);
-      setPaymentStatus("An error occurred during the payment process.");
+  useEffect(() => {
+    if (!deliveryCharge || !goodsId || !goodName) {
+      setError("Invalid payment details");
+      return;
     }
+  }, [deliveryCharge, goodsId, goodName]);
+
+  // Create a Razorpay order and trigger payment
+  const handlePayment = async () => {
+    setLoading(true);
+    try {
+      // 1. Call your backend to create an order (you need to create this API)
+      const orderData = await fetch(`${API_URL}/create-order`, {
+        method: "POST",
+        body: JSON.stringify({
+          amount: deliveryCharge, // Convert to paise
+          goodsId,
+          goodName,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(orderData);
+      const order = await orderData.json();
+      console.log(order);
+      console.log(window.Razorpay);
+      // 2. Configure Razorpay options
+      const options = {
+        key: "rzp_test_BlJfHq0egoeqt9", // Your Razorpay key (from the Razorpay dashboard)
+        amount: order.amount, // Amount in paise
+        currency: order.currency,
+        name: "Your Company Name",
+        description: `Payment for ${goodName}`,
+        image: "https://yourdomain.com/your-logo.png",
+        order_id: order.id, // Order ID from the backend
+        handler: async function (response) {
+          // Handle successful payment response here
+          console.log("Payment success:", response);
+          // You can send the payment details to the backend to verify and store the payment status
+        },
+        prefill: {
+          name: "Customer Name",
+          email: "customer@example.com",
+          contact: "1234567890",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+
+      // 3. Trigger Razorpay checkout
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
+    } catch (error) {
+      console.error("Payment initiation failed", error);
+      setError("Failed to initiate payment. Please try again.");
+    }
+    setLoading(false);
   };
 
   return (
-    <div className="payment-page">
-      <h2>Payment Page</h2>
-      <div className="payment-form">
-        <label>
-          Amount:
-          <input
-            type="number"
-            value={amount}
-            onChange={handleAmountChange}
-            min="1"
-            placeholder="Enter amount"
-          />
-        </label>
-
-        <label>
-          Payment Method:
-          <select value={paymentMethod} onChange={handlePaymentMethodChange}>
-            <option value="stripe">Stripe</option>
-            <option value="paypal">PayPal</option>
-          </select>
-        </label>
-
-        <button onClick={handlePayment}>Pay Now</button>
-
-        <div className="payment-status">
-          {paymentStatus && <p>{paymentStatus}</p>}
-        </div>
-      </div>
+    <div>
+      <h2>Payment for Good: {goodName}</h2>
+      <p>Delivery Charge: ₹{deliveryCharge}</p>
+      <button onClick={handlePayment} disabled={loading}>
+        {loading ? "Processing..." : "Proceed to Pay"}
+      </button>
+      {error && <div className="error-message">{error}</div>}
     </div>
   );
 };

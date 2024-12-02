@@ -1,7 +1,7 @@
 import app from "./app.js";
 import dotenv from "dotenv";
 
-dotenv.config;
+dotenv.config();
 
 const PORT = process.env.PORT || process.env.API_PORT;
 app.listen(PORT, () => {
