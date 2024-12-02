@@ -7,7 +7,7 @@ import goodsRoutes from "./routes/goodsRoutes.js";
 import transporterRoutes from "./routes/transporterRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
-
+import razorpayRoutes from "./routes/razorpayRoutes.js";
 dotenv.config();
 connectDB();
 const app = express();
@@ -18,7 +18,7 @@ app.use("/api/goods", goodsRoutes);
 app.use("/api/transporters", transporterRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/notifications", notificationRoutes);
-app.use("/api/payment", paymentRoutes);
+app.use("/api/payment", razorpayRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running...");

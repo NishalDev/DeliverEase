@@ -20,30 +20,20 @@ const transportSchema = new mongoose.Schema(
     vehicleType: {
       type: String,
       enum: ["truck", "van", "bike"],
-      // Default vehicle type
       required: true,
     },
     deliveryCharge: {
       type: Number,
-      required: true, // Ensure delivery charge is always provided
+      required: true,
     },
     currentLocation: {
       type: String,
-      // required: function () {
-      //   return this.status === "in-transit"; // Current location is required once delivery starts
-      // },
     },
     deliveryStartTime: {
       type: Date,
-      // required: function () {
-      //   return this.status === "in-transit"; // Start time is required once the delivery starts
-      // },
     },
     deliveryEndTime: {
       type: Date,
-      // required: function () {
-      //   return this.status === "delivered"; // End time is required once the delivery ends
-      // },
     },
     status: {
       type: String,
@@ -55,12 +45,37 @@ const transportSchema = new mongoose.Schema(
         "pendingOwnerApproval",
         "rejected",
         "cancelled",
-      ], // Add 'approved' to the enum values
-      default: "assigned", // Initial status waiting for goods owner approval
+      ],
+      default: "assigned",
     },
+    escrowStatus: {
+      type: String,
+      enum: ["pending", "funded", "released", "cancelled"],
+      default: "pending", // Initial escrow state
+    },
+    escrowReferenceHash: {
+      type: String, // Hash to reference blockchain escrow
+    },
+    deliveryProgress: [
+      {
+        timestamp: { type: Date, default: Date.now },
+        location: String, // Updates during in-transit status
+      },
+    ],
   },
   { timestamps: true }
 );
+
+// Pre-save hook to validate dependent fields
+transportSchema.pre("save", function (next) {
+  if (this.status === "in-transit" && !this.currentLocation) {
+    return next(new Error("Current location is required when delivery is in transit."));
+  }
+  if (this.status === "delivered" && !this.deliveryEndTime) {
+    return next(new Error("Delivery end time is required when the delivery is marked as delivered."));
+  }
+  next();
+});
 
 const Transport = mongoose.model("Transport", transportSchema);
 export default Transport;

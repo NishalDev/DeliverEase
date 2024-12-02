@@ -145,7 +145,7 @@
   "sourceMap": "69:2030:1:-;;;875:156;8:9:-1;5:2;;;30:1;27;20:12;5:2;875:156:1;931:10;907:5;;:36;;;;;;;;;;;;;;;;;;1022:1;1003:16;:20;;;;69:2030;;;;;;",
   "deployedSourceMap": "69:2030:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1082:428;;;:::i;:::-;;1590:347;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1590:347:1;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1590:347:1;;;;;;;;;;;;;;;;;:::i;:::-;;1992:104;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1992:104:1;;;:::i;:::-;;;;;;;;;;;;;;;;;;;442:40;;8:9:-1;5:2;;;30:1;27;20:12;5:2;442:40:1;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;442:40:1;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;100:28;;8:9:-1;5:2;;;30:1;27;20:12;5:2;100:28:1;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;172;;8:9:-1;5:2;;;30:1;27;20:12;5:2;172:28:1;;;:::i;:::-;;;;;;;;;;;;;;;;;;;1082:428;1143:1;1131:9;:13;1123:51;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1227:16;;:18;;;;;;;;;;;;;1339:47;;;;;;;;;1347:10;1339:47;;;;;;1359:9;1339:47;;;;1370:15;1339:47;;;1310:8;:26;1319:16;;1310:26;;;;;;;;;;;:76;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1462:10;1446:56;;;1474:9;1485:16;;1446:56;;;;;;;;;;;;;;;;;;;;;;;;1082:428::o;1590:347::-;736:5;;;;;;;;;;;722:19;;:10;:19;;;714:71;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1682:6;1665:4;1657:21;;;:31;;1649:81;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1813:5;;;;;;;;;;;:14;;:22;1828:6;1813:22;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1813:22:1;1915:5;;;;;;;;;;;1898:31;;;1922:6;1898:31;;;;;;;;;;;;;;;;;;1590:347;:::o;1992:104::-;2043:4;2075;2067:21;;;2060:28;;1992:104;:::o;442:40::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;100:28::-;;;;;;;;;;;;;:::o;172:::-;;;;:::o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.4.22 <0.9.0;\r\n\r\ncontract PaymentGateway {\r\n    address payable public owner; // Change address to address payable\r\n    uint public transactionCount;\r\n\r\n    // Event to log transactions\r\n    event PaymentReceived(address indexed from, uint amount, uint transactionId);\r\n    event PaymentWithdrawn(address indexed to, uint amount);\r\n\r\n    // Mapping to track payments by transaction ID\r\n    mapping(uint => Payment) public payments;\r\n\r\n    // Struct to store payment details\r\n    struct Payment {\r\n        address payer;\r\n        uint amount;\r\n        uint timestamp;\r\n    }\r\n\r\n    // Modifier to restrict access to the owner\r\n    modifier onlyOwner() {\r\n        require(msg.sender == owner, \"Only the owner can perform this action.\");\r\n        _;\r\n    }\r\n\r\n    // Constructor to set the contract deployer as the owner\r\n    constructor() public {\r\n        owner = address(uint160(msg.sender)); // Explicitly cast msg.sender to address payable\r\n        transactionCount = 0;\r\n    }\r\n\r\n    // Function to receive Ether payments\r\n    function pay() public payable {\r\n        require(msg.value > 0, \"You must send some Ether.\");\r\n\r\n        // Increment transaction count\r\n        transactionCount++;\r\n\r\n        // Log the payment in the payments mapping\r\n        payments[transactionCount] = Payment(msg.sender, msg.value, block.timestamp);\r\n\r\n        // Emit an event for the payment\r\n        emit PaymentReceived(msg.sender, msg.value, transactionCount);\r\n    }\r\n\r\n    // Function to allow the owner to withdraw Ether from the contract\r\n    function withdraw(uint amount) public onlyOwner {\r\n        require(address(this).balance >= amount, \"Insufficient balance in the contract.\");\r\n\r\n        // Transfer the funds to the owner (cast to address payable)\r\n        owner.transfer(amount);\r\n\r\n        // Emit an event for the withdrawal\r\n        emit PaymentWithdrawn(owner, amount);\r\n    }\r\n\r\n    // Function to get the contract's balance\r\n    function getContractBalance() public view returns (uint) {\r\n        return address(this).balance;\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\Lenovo\\Desktop\\DeliverEase\\DeliverEase\\payment-gateway\\contracts\\PaymentGateway.sol",
+  "sourcePath": "C:\\Users\\ASUS\\OneDrive\\Desktop\\DeliverEase\\DeliverEase\\payment-gateway\\contracts\\PaymentGateway.sol",
   "ast": {
     "absolutePath": "project:/contracts/PaymentGateway.sol",
     "exportedSymbols": {
@@ -3930,12 +3930,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x08f02317A61B6D72739beA297fE6F9C26f3789aA",
-      "transactionHash": "0x842e2fb8d4f5af594025177d2e05e872ea4b25b4bebffd94958fd9701ccd3515"
+      "address": "0x4A943E08F979082159Ba1fc8e5F1ab6196CB2951",
+      "transactionHash": "0xfd12f718755635f541108de8cf30d591e6b51eba3c769fb6c4a79007fa387d9a"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-12-01T06:15:09.367Z",
+  "updatedAt": "2024-12-02T13:56:42.397Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
