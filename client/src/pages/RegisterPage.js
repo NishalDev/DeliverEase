@@ -30,7 +30,7 @@ const RegisterPage = () => {
 
   return (
     <div className="register-page">
-      <h2>Register</h2>
+      
       {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleRegister}>
         <div className="form-group">
