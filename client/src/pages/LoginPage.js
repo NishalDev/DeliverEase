@@ -58,7 +58,7 @@ const LoginPage = () => {
           />
         </div>
         <button type="submit" className="btn">
-          Register
+          Login
         </button>
         <p className="redirect-redirect">
           Don&apos;t have an account? <Link to="/register">Register here</Link>

@@ -1,71 +1,112 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { initWeb3, deposit, getAccount } from "../Services/web3"; // Import web3 methods
 const API_URL = "http://localhost:5002/api/payment";
+
 const PaymentPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { deliveryCharge, goodsId, goodName } = location.state || {};
-  console.log(goodName);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Initialize Web3 when the component loads
   useEffect(() => {
     if (!deliveryCharge || !goodsId || !goodName) {
-      setError("Invalid payment details");
+      setError("Invalid payment details.");
       return;
     }
+
+    initWeb3(); // Initialize Web3 (connect to MetaMask)
   }, [deliveryCharge, goodsId, goodName]);
 
-  // Create a Razorpay order and trigger payment
   const handlePayment = async () => {
     setLoading(true);
+    setError("");
+
     try {
-      // 1. Call your backend to create an order (you need to create this API)
-      const orderData = await fetch(`${API_URL}/create-order`, {
+      // Step 1: Create a Razorpay order via backend API
+      const orderResponse = await fetch(`${API_URL}/create-order`, {
         method: "POST",
         body: JSON.stringify({
-          amount: deliveryCharge, // Convert to paise
+          amount: deliveryCharge, // Amount to be paid in INR (converted to paise)
           goodsId,
           goodName,
         }),
         headers: { "Content-Type": "application/json" },
       });
-      console.log(orderData);
-      const order = await orderData.json();
-      console.log(order);
-      console.log(window.Razorpay);
-      // 2. Configure Razorpay options
+
+      if (!orderResponse.ok) {
+        throw new Error("Failed to create Razorpay order");
+      }
+
+      const order = await orderResponse.json();
+
+      // Step 2: Configure Razorpay options
       const options = {
-        key: "rzp_test_BlJfHq0egoeqt9", // Your Razorpay key (from the Razorpay dashboard)
-        amount: order.amount, // Amount in paise
+        key: "rzp_test_BlJfHq0egoeqt9", // Replace with your Razorpay key
+        amount: order.amount, // Amount in paise (100 paise = 1 INR)
         currency: order.currency,
-        name: "Your Company Name",
-        description: `Payment for ${goodName}`,
-        image: "https://yourdomain.com/your-logo.png",
+        name: "DeliverEase",
+        description: `Payment for Good: ${goodName}`,
+        image: "https://yourdomain.com/your-logo.png", // Optional logo
         order_id: order.id, // Order ID from the backend
         handler: async function (response) {
-          // Handle successful payment response here
           console.log("Payment success:", response);
-          // You can send the payment details to the backend to verify and store the payment status
+
+          // Step 3: Web3 integration - Make payment via smart contract (Escrow)
+          try {
+            const account = await getAccount(); // Get the user's Ethereum account
+
+            // Call deposit function from your web3.js service (Escrow contract deposit)
+            await deposit(deliveryCharge, account);
+
+            // Step 4: Verify payment on the backend
+            const verifyResponse = await fetch(`${API_URL}/verify-payment`, {
+              method: "POST",
+              body: JSON.stringify(response),
+              headers: { "Content-Type": "application/json" },
+            });
+
+            const verificationResult = await verifyResponse.json();
+            if (verificationResult.success) {
+              alert("Payment successful and verified!");
+              navigate("/payment-success", { state: { goodsId, goodName } });
+            } else {
+              alert("Payment verification failed.");
+            }
+          } catch (verificationError) {
+            console.error("Payment verification failed:", verificationError);
+            alert(
+              "Payment successful, but verification failed. Please contact support."
+            );
+          }
         },
         prefill: {
-          name: "Customer Name",
-          email: "customer@example.com",
+          name: "John Doe", // Replace with dynamic user data if available
+          email: "john.doe@example.com",
           contact: "1234567890",
         },
         theme: {
           color: "#F37254",
         },
+        modal: {
+          ondismiss: () => {
+            alert("Payment process interrupted. Try again.");
+          },
+        },
       };
 
-      // 3. Trigger Razorpay checkout
+      // Step 5: Initialize and open Razorpay checkout
       const razorpay = new window.Razorpay(options);
       razorpay.open();
     } catch (error) {
-      console.error("Payment initiation failed", error);
+      console.error("Payment initiation failed:", error);
       setError("Failed to initiate payment. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
