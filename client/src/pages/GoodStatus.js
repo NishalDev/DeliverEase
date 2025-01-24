@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import GoodsService from "../Services/GoodsService";
-import { Box, Typography, CircularProgress, List, ListItem, ListItemText, Paper } from "@mui/material";
-
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+} from "@mui/material";
 const GoodStatus = () => {
   const [goods, setGoods] = useState([]); // List of goods
   const [error, setError] = useState("");
@@ -32,13 +39,31 @@ const GoodStatus = () => {
 
   return (
     <Box sx={{ padding: 6, minHeight: "100vh", backgroundColor: "#e8f0fe" }}>
-      <Paper elevation={6} sx={{ padding: 6, maxWidth: 900, margin: "0 auto", borderRadius: "12px" }}>
-        <Typography variant="h3" gutterBottom align="center" sx={{ color: "#3f51b5", fontWeight: "bold", fontSize: "2.5rem" }}>
+      <Paper
+        elevation={6}
+        sx={{
+          padding: 6,
+          maxWidth: 900,
+          margin: "0 auto",
+          borderRadius: "12px",
+        }}
+      >
+        <Typography
+          variant="h3"
+          gutterBottom
+          align="center"
+          sx={{ color: "#3f51b5", fontWeight: "bold", fontSize: "2.5rem" }}
+        >
           Goods List
         </Typography>
 
         {loading ? (
-          <Box display="flex" justifyContent="center" alignItems="center" height="150px">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="150px"
+          >
             <CircularProgress size={80} thickness={4} />
           </Box>
         ) : error ? (
@@ -65,8 +90,22 @@ const GoodStatus = () => {
                 }}
               >
                 <ListItemText
-                  primary={<Typography sx={{ fontWeight: "bold", color: "#3f51b5", fontSize: "1.5rem" }}>{good.name}</Typography>}
-                  secondary={<Typography sx={{ fontSize: "1.25rem" }}>{`Status: ${good.status}`}</Typography>}
+                  primary={
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        color: "#3f51b5",
+                        fontSize: "1.5rem",
+                      }}
+                    >
+                      {good.name}
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography
+                      sx={{ fontSize: "1.25rem" }}
+                    >{`Status: ${good.status}`}</Typography>
+                  }
                 />
               </ListItem>
             ))}

@@ -83,7 +83,7 @@ const Footer = () => {
                   color: "#000000",
                 }}
               >
-                Mangalore Institute OF Technology & Engineering, Moodbidri, South Canara, Karnataka - 574227
+                Mangalore Institute of Technology & Engineering, Moodbidri, South Canara, Karnataka - 574227
               </Typography>
             </Box>
           </Box>

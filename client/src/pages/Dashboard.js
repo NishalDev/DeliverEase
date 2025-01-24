@@ -4,6 +4,7 @@ import { Box, Button, Typography, Grid } from "@mui/material";
 import RoleButtons from "../components/RoleButtons";
 import AuthService from "../Services/AuthService";
 import Navigation2 from "../components/Navigation2.js";
+import Navigation1 from "../components/Navigation1.js";
 import Footer from "./Footer.js";
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Dashboard = () => {
     <div
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
-      <Navigation2 />
+      <Navigation1 />
       <Box sx={{ textAlign: "center", padding: 4, minHeight: "100vh" }}>
         <Typography variant="h3" sx={{ fontWeight: 700, marginBottom: 10 }}>
          What are you up to?

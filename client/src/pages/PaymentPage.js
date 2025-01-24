@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Typography } from "@mui/material"; // Import Typography component
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { initWeb3, deposit, getAccount } from "../Services/web3"; // Import web3 methods
 import {
@@ -9,6 +11,8 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material"; // Import Material UI components
+import Navigation1 from "../components/Navigation1.js";
+import Footer from "./Footer.js";
 
 const API_URL = "http://localhost:5002/api/payment";
 
@@ -120,33 +124,73 @@ const PaymentPage = () => {
   };
 
   return (
-    <Box sx={{ padding: 3 }}>
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={isChecked}
-            onChange={(e) => setIsChecked(e.target.checked)} // Update the checkbox state
-          />
-        }
-        label="I confirm to proceed with the payment"
-      />
-      <Box sx={{ marginTop: 2 }}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handlePayment}
-          disabled={!isChecked} // Disable button if checkbox is not checked
-          fullWidth
-        >
-          {loading ? <CircularProgress size={24} /> : `PAY ₹${deliveryCharge}` }
-        </Button>
-        {error && (
-          <Alert severity="error" sx={{ marginTop: 2 }}>
-            {error}
-          </Alert>
-        )}
+    <div>
+      <Navigation1 />
+      <Box sx={{ padding: 3 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={isChecked}
+              onChange={(e) => setIsChecked(e.target.checked)} // Update the checkbox state
+            />
+          }
+          label={
+            <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+              I confirm to proceed with the payment
+            </Typography>
+          }
+        />
+
+        <Box sx={{ marginTop: 2 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handlePayment}
+            disabled={!isChecked} // Disable button if checkbox is not checked
+            fullWidth
+            sx={{
+              fontWeight: "bold", // Bold text
+              color: "#000", // Black text color
+              padding: "10px 20px",
+              borderRadius: 30,
+              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+              background: "linear-gradient(45deg, #FFD700, #ffffff)", // Gold to white gradient
+              "&:hover": {
+                background: "linear-gradient(45deg, #FFA500, #ffffff)", // Slightly darker gold for hover effect
+                boxShadow: "0 6px 20px rgba(0, 0, 0, 0.15)",
+              },
+            }}
+          >
+            {loading ? (
+              <CircularProgress size={24} />
+            ) : (
+              `PAY ₹${deliveryCharge}`
+            )}
+          </Button>
+
+          {error && (
+            <Alert severity="error" sx={{ marginTop: 2 }}>
+              {error}
+            </Alert>
+          )}
+        </Box>
       </Box>
-    </Box>
+      <div>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>  <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        
+      </div>
+      <Footer />
+    </div>
   );
 };
 

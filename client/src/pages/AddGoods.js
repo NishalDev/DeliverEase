@@ -16,7 +16,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-
+import Navigation1 from "../components/Navigation1.js";
 const AddGood = () => {
   const [goods, setGoods] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -106,6 +106,8 @@ const AddGood = () => {
   };
 
   return (
+    <div>
+      <Navigation1/>
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <BackButton />
       <Typography variant="h4" component="h1" gutterBottom>
@@ -214,6 +216,7 @@ const AddGood = () => {
         </Button>
       </Box>
     </Container>
+    </div>
   );
 };
 
