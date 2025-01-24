@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation  } from "react-router-dom";
 import Homepage from "./pages/Homepage"; // Homepage component
 import GoodsDashboard from "./pages/GoodsDashboard"; // GoodsDashboard component
 import TransporterDashboard from "./pages/TransporterDashboard"; // TransporterDashboard component
 import PaymentPage from "./pages/PaymentPage"; // PaymentPage component
-import Navigation from "./components/Navigation"; // Navigation component
+import Navigation from "./components/Navigation.js"; // Navigation components
+import Navigation1 from './components/Navigation1.js';
+import Navigation2 from './components/Navigation2.js';
+// import Navigation1 from "./components/NavigationHome.js"; // Navigation component
 import ServicesPage from "./pages/ServicesPage"; // ServicesPage component
 import Dashboard from "./pages/Dashboard"; // Dashboard component
 import ManageDashboard from "./pages/ManageDashboard"; // ManageDashboard component
@@ -21,10 +24,16 @@ import OfferGood from "./pages/OfferGood.js";
 import GoodDetailPage from "./pages/GoodDetail.js";
 import Notifications from "./components/Notification.js";
 //import PaymentPage from "./pages/PaymentPage.js";  // Ensuring this is imported only once
+import authService from './Services/AuthService.js';
+import AboutUs from './pages/AboutUs.js';
+import Features from './pages/Features.js';
+
 
 const App = () => {
+  
   useEffect(() => {
     const handleScroll = () => {
+
       const scrollY = window.scrollY;
       const sections = document.querySelectorAll(".section");
 
@@ -52,9 +61,10 @@ const App = () => {
 
   return (
     <Router>
-      <Navigation /> {/* Navigation bar should be consistent across all routes */}
+      {/* Navigation bar should be consistent across all routes */}
       <Routes>
         <Route path="/" element={<Homepage />} /> {/* Homepage route */}
+        <Route path="/aboutus" element={<AboutUs/>} />
         <Route path="/register" element={<RegisterPage />} /> {/* Register route */}
         <Route path="/login" element={<LoginPage />} /> {/* Login route */}
         <Route path="/goods-dashboard" element={<GoodsDashboard />} /> {/* Goods owner dashboard */}
@@ -67,6 +77,7 @@ const App = () => {
         <Route path="/payment" element={<PaymentPage />} /> {/* Payment page */}
         <Route path="/services" element={<ServicesPage />} /> {/* Services page */}
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/features" element={<Features />} />
         <Route path="/offer-good" element={<OfferGood />} />
         <Route path="/transport-status" element={<TransporterStatus />} />
         <Route path="/transport-detail/:offerId" element={<TransportDetail />} />

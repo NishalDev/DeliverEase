@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import AuthService from "../Services/AuthService.js"; // Assuming this handles API calls
+import AuthService from "../Services/AuthService";
 import { useNavigate, Link } from "react-router-dom";
-import "../css/main.css";
+import { Typography, TextField, Button, Alert } from "@mui/material";
+import Navigation2 from "../components/Navigation2.js";
 const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -9,12 +10,11 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Handle form submission
   const handleRegister = async (e) => {
     e.preventDefault();
 
     if (!username || !email || !password) {
-      setError("All fields are required");
+      setError("All fields are required.");
       return;
     }
 
@@ -29,50 +29,140 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="register-page">
-      <h2>Register</h2>
-      {error && <div className="error-message">{error}</div>}
-      <form onSubmit={handleRegister}>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
+    <div>
+      {" "}
+      <Navigation2 />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          background: "linear-gradient(to top, #F3F6B2, #ffffff 40%)",
+          flexDirection: "column",
+        }}
+      >
+        <Typography
+          variant="h5"
+          style={{ fontWeight: "bold", color: "#333", marginBottom: "34px" }}
+        >
+          Create a new account
+        </Typography>
+
+        {error && (
+          <Alert severity="error" style={{ marginBottom: "16px" }}>
+            {error}
+          </Alert>
+        )}
+
+        {/* Username Field */}
+        <div style={{ width: "300px", marginBottom: "16px" }}>
+          <Typography
+            variant="body1"
+            style={{ fontWeight: "bold", marginBottom: "4px" }}
+          >
+            Username
+          </Typography>
+          <TextField
+            fullWidth
+            variant="standard"
             type="text"
-            id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
+            required
+            InputProps={{ disableUnderline: true }}
+            sx={{
+              "& input": {
+                borderBottom: "2px solid #999",
+                transition: "border-color 0.3s ease-in-out",
+              },
+              "& input:hover": { borderBottom: "2px solid gold" },
+              "& input:focus": { borderBottom: "2px solid gold" },
+            }}
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
+        {/* Email Field */}
+        <div style={{ width: "300px", marginBottom: "16px" }}>
+          <Typography
+            variant="body1"
+            style={{ fontWeight: "bold", marginBottom: "4px" }}
+          >
+            Email
+          </Typography>
+          <TextField
+            fullWidth
+            variant="standard"
             type="email"
-            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
+            required
+            InputProps={{ disableUnderline: true }}
+            sx={{
+              "& input": {
+                borderBottom: "2px solid #999",
+                transition: "border-color 0.3s ease-in-out",
+              },
+              "& input:hover": { borderBottom: "2px solid gold" },
+              "& input:focus": { borderBottom: "2px solid gold" },
+            }}
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
+        {/* Password Field */}
+        <div style={{ width: "300px", marginBottom: "16px" }}>
+          <Typography
+            variant="body1"
+            style={{ fontWeight: "bold", marginBottom: "4px" }}
+          >
+            Password
+          </Typography>
+          <TextField
+            fullWidth
+            variant="standard"
             type="password"
-            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
+            required
+            InputProps={{ disableUnderline: true }}
+            sx={{
+              "& input": {
+                borderBottom: "2px solid #999",
+                transition: "border-color 0.3s ease-in-out",
+              },
+              "& input:hover": { borderBottom: "2px solid gold" },
+              "& input:focus": { borderBottom: "2px solid gold" },
+            }}
           />
         </div>
 
-        <button type="submit" className="btn">
+        <Button
+          onClick={handleRegister}
+          variant="contained"
+          style={{
+            backgroundColor: "#ffd700",
+            color: "#000",
+            fontWeight: "bold",
+            "&:hover": { backgroundColor: "#E6B800" },
+          }}
+        >
           Register
-        </button>
-        <p className="login-redirect">
-          Already have an account? <Link to="/login">Login here</Link>
-        </p>
-      </form>
+        </Button>
+
+        <Typography variant="body2" style={{ marginTop: "16px" }}>
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            style={{
+              textDecoration: "underline",
+              color: "#000",
+              fontWeight: "bold",
+            }}
+          >
+            Login here
+          </Link>
+        </Typography>
+      </div>
     </div>
   );
 };

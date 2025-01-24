@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
-import GoodsService from "../Services/GoodsService"; // Assuming GoodsService handles API calls
-import "../css/GoodsDashboard.css"; // Import CSS file
+import { useNavigate } from "react-router-dom";
+import GoodsService from "../Services/GoodsService";
+import { Box, Typography, CircularProgress, List, ListItem, ListItemText, Paper } from "@mui/material";
 
 const GoodStatus = () => {
   const [goods, setGoods] = useState([]); // List of goods
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Initialize navigate
+  const [loading, setLoading] = useState(true); // Loading state for fetching goods
+  const navigate = useNavigate();
 
   // Fetch all goods owned by the user on component mount
   useEffect(() => {
     const fetchGoods = async () => {
       try {
-        const goodsData = await GoodsService.fetchGoods(); // Fetch the list of goods
+        const goodsData = await GoodsService.fetchGoods();
         setGoods(goodsData);
+        setLoading(false);
       } catch (err) {
         setError("Failed to fetch goods. Please try again.");
+        setLoading(false);
       }
     };
 
@@ -28,25 +31,53 @@ const GoodStatus = () => {
   };
 
   return (
-    <div className="good-status-page">
-      <h2>Goods List</h2>
+    <Box sx={{ padding: 6, minHeight: "100vh", backgroundColor: "#e8f0fe" }}>
+      <Paper elevation={6} sx={{ padding: 6, maxWidth: 900, margin: "0 auto", borderRadius: "12px" }}>
+        <Typography variant="h3" gutterBottom align="center" sx={{ color: "#3f51b5", fontWeight: "bold", fontSize: "2.5rem" }}>
+          Goods List
+        </Typography>
 
-      {error && <div className="error-message">{error}</div>}
-
-      <div className="goods-list">
-        {goods.length > 0 ? (
-          <ul>
+        {loading ? (
+          <Box display="flex" justifyContent="center" alignItems="center" height="150px">
+            <CircularProgress size={80} thickness={4} />
+          </Box>
+        ) : error ? (
+          <Typography color="error" align="center" sx={{ fontSize: "1.5rem" }}>
+            {error}
+          </Typography>
+        ) : goods.length > 0 ? (
+          <List>
             {goods.map((good) => (
-              <li key={good._id} onClick={() => handleGoodClick(good._id)}>
-                <button className="good-name-btn">{good.name}</button>
-              </li>
+              <ListItem
+                button
+                key={good._id}
+                onClick={() => handleGoodClick(good._id)}
+                sx={{
+                  padding: 3,
+                  marginBottom: 3,
+                  backgroundColor: "#ffffff",
+                  borderRadius: "12px",
+                  boxShadow: 5,
+                  "&:hover": {
+                    backgroundColor: "#c5cae9",
+                    boxShadow: 8,
+                  },
+                }}
+              >
+                <ListItemText
+                  primary={<Typography sx={{ fontWeight: "bold", color: "#3f51b5", fontSize: "1.5rem" }}>{good.name}</Typography>}
+                  secondary={<Typography sx={{ fontSize: "1.25rem" }}>{`Status: ${good.status}`}</Typography>}
+                />
+              </ListItem>
             ))}
-          </ul>
+          </List>
         ) : (
-          <p>No goods available</p>
+          <Typography align="center" variant="h6">
+            No goods available
+          </Typography>
         )}
-      </div>
-    </div>
+      </Paper>
+    </Box>
   );
 };
 

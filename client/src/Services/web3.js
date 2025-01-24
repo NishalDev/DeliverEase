@@ -41,7 +41,7 @@ export const getAccount = async () => {
 
 // Deposit funds into escrow
 // Function to convert INR to ETH (dummy rate, use a real API for live rate)
-const inrToEthRate = 0.002; // Example rate (1 INR = 0.000011 ETH)
+const inrToEthRate = 0.00002; // Example rate (1 INR = 0.000011 ETH)
 export const deposit = async (amountInInr, account) => {
   const amountInEth = amountInInr * inrToEthRate; // Convert INR to ETH
 

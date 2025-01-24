@@ -1,42 +1,62 @@
 /* src/components/Navigation.css */
 
 nav {
-    background-color: #333;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 8px;
+  background-color: #333;
+  padding: 0.5rem 1rem; /* Reduce padding for a thinner navbar */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.logo h1 {
+  color: white;
+  font-size: 1.3rem; /* Slightly smaller font size for better balance */
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem; /* Adjust gap for more compact buttons */
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  margin: 0;
+}
+
+ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem; /* Padding keeps buttons clickable but not too large */
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 14px; /* Reduce font size to fit better in a thinner navbar */
+}
+
+ul li a:hover {
+  background-color: #4CAF50; /* Green background on hover */
+  color: white; /* Text stays white on hover */
+}
+
+@media (max-width: 768px) {
+  /* Ensure the navbar adjusts well on smaller screens */
+  nav {
+    padding: 0.5rem 0.8rem;
   }
-  
+
   .logo h1 {
-    color: white;
-    font-size: 1.5rem;
-    margin: 0;
+    font-size: 1.2rem; /* Slightly smaller on mobile */
   }
-  
+
   ul {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-    margin: 0;
-    padding: 0;
+    gap: 0.8rem; /* Reduce gap for better mobile appearance */
   }
-  
-  ul li {
-    margin: 0;
-  }
-  
+
   ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 12px; /* Reduce font size further on mobile */
+    padding: 0.3rem 0.8rem; /* Smaller padding for mobile */
   }
-  
-  ul li a:hover {
-    background-color: #4CAF50; /* On hover, background becomes green */
-    color: white; /* Text stays white */
-  }
-  
+}

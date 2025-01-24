@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TransportService from "../Services/TransportService.js";
 import BackButton from "../components/BackButton.js";
-import "../css/TransporterDashboard.css"; // Ensure the path is correct
+import { Typography, Box, Grid, Alert, Paper, CircularProgress } from "@mui/material";
 
 const TransportDetail = () => {
   const { offerId } = useParams(); // Get the offer ID from the URL parameters
@@ -27,41 +27,316 @@ const TransportDetail = () => {
   }, [offerId]);
 
   return (
-    <div className="transporter-dashboard">
-      <BackButton/>
-      <h2>Transport Offer Details</h2>
-      {error && <div className="error-message">{error}</div>}
-      {offerDetails ? (
-        <div className="offer-info">
-          <div className="offer-detail-item">
-            <strong>Goods Name:</strong> {offerDetails.goods?.name}
-          </div>
-          <div className="offer-detail-item">
-            <strong>Status:</strong> {offerDetails.status}
-          </div>
-          <div className="offer-detail-item">
-            <strong>Delivery Charge:</strong> {offerDetails.deliveryCharge}
-          </div>
-          <div className="offer-detail-item">
-            <strong>Vehicle Type:</strong> {offerDetails.vehicleType}
-          </div>
-          <div className="offer-detail-item">
-            <strong>Tracking ID:</strong> {offerDetails.trackingId}
-          </div>
-          <div className="offer-detail-item">
-            <strong>Current Location:</strong> {offerDetails.currentLocation || "Not available"}
-          </div>
-          <div className="offer-detail-item">
-            <strong>Delivery Start Time:</strong> {offerDetails.deliveryStartTime ? new Date(offerDetails.deliveryStartTime).toLocaleString() : "Not started"}
-          </div>
-          <div className="offer-detail-item">
-            <strong>Delivery End Time:</strong> {offerDetails.deliveryEndTime ? new Date(offerDetails.deliveryEndTime).toLocaleString() : "Not completed"}
-          </div>
-        </div>
-      ) : (
-        !error && <p>Loading transport details...</p>
-      )}
-    </div>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#f5f5f5", // Similar background color to GoodDetailPage
+        padding: 4,
+      }}
+    >
+      <Paper
+        sx={{
+          maxWidth: 1000,
+          width: "100%",
+          padding: 4,
+          boxShadow: 3,
+          textAlign: "center",
+          borderRadius: "12px",
+          backgroundColor: "#ffffff", // Matching background color for consistency
+        }}
+      >
+        <BackButton />
+        <Typography
+          variant="h3"
+          gutterBottom
+          sx={{
+            color: "#3f51b5", // Matching color for headings
+            fontWeight: "bold",
+            fontSize: "2rem", // Similar font size for the heading
+          }}
+        >
+          Transport Offer Details
+        </Typography>
+
+        {error && (
+          <Alert severity="error" sx={{ marginBottom: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        {offerDetails ? (
+          <Grid container spacing={3}>
+            {/* Similar card-like box structure for each field */}
+            <Grid item xs={12} sm={6}>
+              <Box
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#fafafa", // Light background color
+                  borderRadius: "8px",
+                  boxShadow: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#757575",
+                    fontWeight: "500",
+                  }}
+                >
+                  Goods Name
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#212121",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {offerDetails.goods?.name}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Box
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#fafafa",
+                  borderRadius: "8px",
+                  boxShadow: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#757575",
+                    fontWeight: "500",
+                  }}
+                >
+                  Status
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#212121",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {offerDetails.status}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Box
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#fafafa",
+                  borderRadius: "8px",
+                  boxShadow: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#757575",
+                    fontWeight: "500",
+                  }}
+                >
+                  Delivery Charge
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#212121",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {offerDetails.deliveryCharge}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Box
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#fafafa",
+                  borderRadius: "8px",
+                  boxShadow: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#757575",
+                    fontWeight: "500",
+                  }}
+                >
+                  Vehicle Type
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#212121",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {offerDetails.vehicleType}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Box
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#fafafa",
+                  borderRadius: "8px",
+                  boxShadow: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#757575",
+                    fontWeight: "500",
+                  }}
+                >
+                  Tracking ID
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#212121",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {offerDetails.trackingId}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Box
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#fafafa",
+                  borderRadius: "8px",
+                  boxShadow: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#757575",
+                    fontWeight: "500",
+                  }}
+                >
+                  Current Location
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#212121",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {offerDetails.currentLocation || "Not available"}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Box
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#fafafa",
+                  borderRadius: "8px",
+                  boxShadow: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#757575",
+                    fontWeight: "500",
+                  }}
+                >
+                  Delivery Start Time
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#212121",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {offerDetails.deliveryStartTime
+                    ? new Date(offerDetails.deliveryStartTime).toLocaleString()
+                    : "Not started"}
+                </Typography>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Box
+                sx={{
+                  padding: 2,
+                  backgroundColor: "#fafafa",
+                  borderRadius: "8px",
+                  boxShadow: 1,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#757575",
+                    fontWeight: "500",
+                  }}
+                >
+                  Delivery End Time
+                </Typography>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "#212121",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {offerDetails.deliveryEndTime
+                    ? new Date(offerDetails.deliveryEndTime).toLocaleString()
+                    : "Not completed"}
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        ) : !error ? (
+          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 4 }}>
+            <CircularProgress size={80} thickness={5} /> {/* Loading spinner */}
+          </Box>
+        ) : null}
+      </Paper>
+    </Box>
   );
 };
 

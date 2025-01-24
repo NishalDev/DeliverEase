@@ -3,16 +3,6 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Other existing styles below */
-
-@font-face {
-    font-family: 'Aileron';
-    src: url('../../public/aileron/Aileron-Black.otf') format('opentype');
-
-    font-weight: normal;
-    font-style: normal;
-}
-
 /* Reset some default browser styles */
 * {
     margin: 0;
@@ -28,40 +18,29 @@ body {
     line-height: 1.6;
     padding: 20px;
     margin: 0;
-    /* Remove default margin */
     overflow-y: auto;
-    /* Enable vertical scrolling */
     height: 100vh;
-    /* Set body height to full viewport */
 }
 
 /* Full-page Section */
 .full-page {
     height: 100vh;
     display: flex;
-    /* Use flexbox for centering */
     justify-content: center;
-    /* Center horizontally */
     align-items: center;
-    /* Center vertically if needed */
     opacity: 0;
-    /* Initially hidden */
     transition: opacity 0.5s ease-in-out;
-    /* Smooth transition */
 }
 
 .full-page.visible {
     opacity: 1;
-    /* Fully visible when the class is added */
 }
 
 /* Container layout for centered content */
 .container {
     min-height: 150vh;
-    /* Ensure the content height exceeds viewport height for scrolling */
     padding: 20px;
     background-color: #E3F2FD;
-    /* Background color for visibility */
 }
 
 /* Flex utility class */
@@ -80,7 +59,7 @@ header {
 }
 
 header h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin: 0;
     text-align: center;
 }
@@ -99,6 +78,8 @@ nav a {
     padding: 10px;
     text-decoration: none;
     text-transform: uppercase;
+    font-weight: bold;
+    transition: background 0.3s ease;
 }
 
 nav a:hover {
@@ -109,10 +90,11 @@ nav a:hover {
 .btn {
     background-color: #009688;
     color: white;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .btn:hover {
@@ -131,10 +113,11 @@ form {
 
 input[type="text"], input[type="password"], input[type="email"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 1rem;
 }
 
 input[type="submit"], .form-btn {
@@ -150,34 +133,32 @@ input[type="submit"]:hover, .form-btn:hover {
     background-color: #00796b;
 }
 
-
 /* Card component for displaying information */
-/* Card Styles */
 .card {
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 100%;
-    /* Adjust width to fit two cards in a row */
     max-width: 80%;
-    /* Maximum width */
     text-align: center;
     margin: 20px auto;
     box-sizing: border-box;
-    /* Ensures padding and width are calculated correctly */
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .card h2 {
     margin-bottom: 10px;
     font-size: 2rem;
     color: #333333;
-    /* Increased font size */
 }
 
 .card p {
     font-size: 1.1rem;
-    /* Increased font size */
     color: #9b9b9b;
 }
 
@@ -190,6 +171,7 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
+    transition: background-color 0.3s ease;
 }
 
 footer p {
@@ -197,43 +179,10 @@ footer p {
     font-size: 0.9rem;
 }
 
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-    }
-
-    .card {
-        width: 100%;
-        /* Full width on smaller screens */
-        max-width: none;
-        /* Remove maximum width */
-        margin: 5px;
-        /* Reduced margin */
-    }
-
-    .card h2 {
-        font-size: 1.5rem;
-        /* Smaller font size on mobile */
-    }
-
-    .card p {
-        font-size: 0.9rem;
-        /* Smaller paragraph font size on mobile */
-    }
-
-    .btn, input[type="submit"] {
-        width: 100%;
-        padding: 15px;
-    }
-}
-
-
 /* Hero Section */
 .hero {
-    /* background-image: url('../../public/images/project1-img.jpg'); */
-    /* Example background image */
-
+    background-color: #003366;
+    background-image: url('../../public/images/project1-img.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -244,30 +193,24 @@ footer p {
 }
 
 .hero-content {
-    align-self: self-start;
     text-align: left;
     padding: 2rem;
-    background-color: #ffffff;
-    /* Add a transparent background */
+    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 5px;
-
 }
 
 .hero-title {
-    color: #003366;
     font-size: 6rem;
     margin-bottom: 1rem;
 }
 
 .hero-subtitle {
-    color: #555555;
     font-size: 1.5rem;
     margin-bottom: 2rem;
     text-align: center;
     font-weight: 300;
 }
 
-/* Buttons in Hero Section */
 .hero-buttons {
     display: flex;
     gap: 1rem;
@@ -283,13 +226,10 @@ footer p {
     border-radius: 5px;
     transition: background-color 0.3s ease;
     margin-top: 20px;
-    /* Add margin here */
 }
-
 
 .hero-button.primary {
     background-color: #1e90ff;
-    /* Primary Button Color */
     color: white;
 }
 
@@ -299,7 +239,6 @@ footer p {
 
 .hero-button.secondary {
     background-color: #003366;
-    /* Secondary Button Color */
     color: white;
 }
 
@@ -309,8 +248,12 @@ footer p {
 
 /* Mobile Styles */
 @media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 3rem;
     }
 
     .hero-subtitle {
@@ -321,32 +264,33 @@ footer p {
         padding: 0.8rem 1.5rem;
         font-size: 0.9rem;
     }
+
+    .card {
+        width: 100%;
+        margin: 10px;
+        max-width: none;
+    }
+
+    .card h2 {
+        font-size: 1.5rem;
+    }
+
+    .card p {
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        width: 100%;
+    }
 }
 
+/* Features Section */
 .features-container {
     display: flex;
-    /* Arrange feature cards in a row */
     justify-content: space-around;
-    /* Space between cards */
-    margin-top: 10px;
-    /* Reduced space above feature section */
     flex-wrap: wrap;
-    /* Allow wrapping for smaller screens */
-}
-
-
-.features-container {
-    display: flex;
-    flex-wrap: wrap;
-    /* Allows wrapping of cards to the next row */
-    justify-content: space-around;
-    /* Spacing between cards */
-    margin-top: 20px;
-}
-
-.feature-card:hover {
-    transform: translateY(-5px);
-    /* Lift effect on hover */
+    gap: 1.5rem;
+    margin-top: 40px;
 }
 
 .feature-card {
@@ -354,35 +298,28 @@ footer p {
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    /* Increased padding for better spacing */
     flex: 1 1 400px;
-    /* Allow cards to grow, with a minimum width */
     max-width: 600px;
     margin: 15px;
-    /* Reduced margin between cards */
     transition: transform 0.3s ease;
 }
 
 .feature-card h3 {
     margin-bottom: 10px;
     font-size: 1.5rem;
-    /* Adjusted font size for headings */
     color: #003366;
-
 }
 
 .feature-card p {
     font-size: 1rem;
-    /* Adjusted font size for paragraphs */
     color: #333333;
-
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
-    /* Lift effect on hover */
 }
 
+/* Section visibility animation */
 .section {
     transition: opacity 0.5s ease-in-out;
     opacity: 0;

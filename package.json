@@ -6,9 +6,17 @@
     "globals": "^15.9.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@fontsource/plus-jakarta-sans": "^5.1.1",
+    "@mui/icons-material": "^5.16.9",
+    "@mui/material": "^5.16.9",
+    "jwt-decode": "^4.0.0",
     "multer": "^1.4.5-lts.1",
     "path": "^0.12.7",
     "razorpay": "^2.9.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "three": "^0.169.0",
     "web3": "^4.15.0"
   }
