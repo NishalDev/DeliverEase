@@ -1,7 +1,5 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, IconButton, Box } from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 
 const Navigation1 = () => {
@@ -9,7 +7,11 @@ const Navigation1 = () => {
     <AppBar
       position="static"
       elevation={0}
-      sx={{ background: "transparent", boxShadow: "none", padding: "0.5rem 2rem" }}
+      sx={{
+        background: "transparent",
+        boxShadow: "none",
+        padding: "0.5rem 2rem",
+      }}
     >
       <Toolbar
         sx={{
@@ -29,16 +31,23 @@ const Navigation1 = () => {
           DeliverEase
         </Typography>
 
-        {/* Icons Section */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: "1.5rem" }}>
-          {/* Notification Icon */}
-          <IconButton color="inherit">
-            <NotificationsIcon sx={{ color: "#444" }} />
-          </IconButton>
-
-          {/* Profile Icon */}
-          <IconButton color="inherit">
-            <AccountCircleIcon sx={{ color: "#444" }} />
+        {/* Notification Icon with Image */}
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <IconButton
+            component={Link}
+            to="/notifications" // Redirection to /notifications
+            sx={{
+              color: "black",
+              "&:hover": {
+                color: "gray", // Color change on hover
+              },
+            }}
+          >
+            <img
+              src="/assets/notification.png" // Path to your custom PNG icon
+              alt="Notifications"
+              style={{ width: 30, height: 30 }} // Adjust size as needed
+            />
           </IconButton>
         </Box>
       </Toolbar>

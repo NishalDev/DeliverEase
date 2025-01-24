@@ -3,8 +3,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { Box, Button, Typography, Container, Grid } from "@mui/material";
 import BackButton from "../components/BackButton";
 import "../css/GoodsDashboard.css";
-import Navigation2 from "../components/Navigation2.js";
-import Notifications from "../components/Notification.js";
+import Navigation1 from "../components/Navigation1.js";
+
 const GoodsDashboard = () => {
   const navigate = useNavigate();
 
@@ -23,10 +23,10 @@ const GoodsDashboard = () => {
 
   return (
     <div>
-      <Navigation2 />
+      <Navigation1 />
       <Container maxWidth="lg" sx={{ paddingY: 4 }}>
         {/* <BackButton /> */}
-        <Notifications />
+
         <Typography
           variant="h4"
           sx={{ textAlign: "center", marginBottom: 4, fontWeight: "bold" }}

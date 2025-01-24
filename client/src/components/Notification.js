@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import NotificationService from "../Services/NotificationService";
-import { Box, Button, Typography, List, ListItem, CircularProgress } from "@mui/material"; // MUI components for better styling
+import {
+  Box,
+  Button,
+  Typography,
+  List,
+  ListItem,
+  CircularProgress,
+} from "@mui/material"; // MUI components for better styling
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -38,8 +45,12 @@ const Notifications = () => {
   };
 
   return (
-    <Box sx={{ padding: 2, backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-      <Typography variant="h4" gutterBottom>
+    <Box sx={{ padding: 2, backgroundColor: "#fff", minHeight: "100vh" }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{ textAlign: "center", fontWeight: "bold" }}
+      >
         Notifications
       </Typography>
 
@@ -57,7 +68,10 @@ const Notifications = () => {
       ) : (
         <List sx={{ padding: 0 }}>
           {notifications.length === 0 ? (
-            <Typography variant="h6" sx={{ textAlign: "center" }}>
+            <Typography
+              variant="h6"
+              sx={{ textAlign: "center", color: "#777" }}
+            >
               No new notifications
             </Typography>
           ) : (
@@ -67,11 +81,11 @@ const Notifications = () => {
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
-                  padding: "10px",
-                  marginBottom: "10px",
-                  backgroundColor: notification.isRead ? "#e8e8e8" : "#fff",
+                  padding: "12px",
+                  marginBottom: "12px",
+                  backgroundColor: notification.isRead ? "#f5f5f5" : "#fff", // Light gray for read notifications
                   borderRadius: 2,
-                  boxShadow: 1,
+                  boxShadow: 2,
                   transition: "background-color 0.3s ease",
                   "&:hover": {
                     backgroundColor: "#f0f0f0",
@@ -83,14 +97,14 @@ const Notifications = () => {
                     to={`/offers/${notification.relatedGood?._id}`}
                     style={{
                       textDecoration: "none",
-                      color: notification.isRead ? "#777" : "#000",
+                      color: notification.isRead ? "#777" : "#222",
                     }}
                   >
                     <Typography
                       variant="body1"
                       sx={{
                         fontWeight: notification.isRead ? "normal" : "bold",
-                        color: notification.isRead ? "#777" : "#000",
+                        color: notification.isRead ? "#777" : "#222",
                       }}
                     >
                       {notification.message}
@@ -102,9 +116,12 @@ const Notifications = () => {
                     variant="outlined"
                     size="small"
                     sx={{
-                      color: "green",
-                      borderColor: "green",
-                      "&:hover": { borderColor: "green", backgroundColor: "#e8f5e9" },
+                      color: "#4caf50", // Light Green color
+                      borderColor: "#4caf50",
+                      "&:hover": {
+                        borderColor: "#4caf50",
+                        backgroundColor: "#e8f5e9",
+                      },
                     }}
                     onClick={() => handleMarkAsRead(notification._id)}
                   >

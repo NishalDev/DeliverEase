@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Typography, Container, Grid } from "@mui/material";
 import BackButton from "../components/BackButton"; // Assuming BackButton is a custom component
-import Navigation2 from "../components/Navigation2"; // Assuming this is a component with navigation links
+import Navigation1 from "../components/Navigation1.js"; // Assuming this is a component with navigation links
 import "../css/TransporterDashboard.css"; // Assuming custom styles are in this file
 
 const TransporterDashboard = () => {
@@ -23,7 +23,7 @@ const TransporterDashboard = () => {
 
   return (
     <div>
-      <Navigation2 />
+      <Navigation1 />
       <Container maxWidth="lg" sx={{ paddingY: 4 }}>
         <Typography
           variant="h4"

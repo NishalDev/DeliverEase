@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import TransportService from "../Services/TransportService.js";
 import BackButton from "../components/BackButton";
-
+import Navigation1 from "../components/Navigation1.js";
 const OfferGood = () => {
   const [goods, setGoods] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -48,7 +48,7 @@ const OfferGood = () => {
 
   return (
     <div className="transporter-dashboard">
-      <BackButton />
+      <Navigation1/>
       <div className="search-bar" style={{ marginBottom: "20px" }}>
         <Typography variant="h4">Available Goods for Transport</Typography>
         <TextField
