@@ -1,81 +1,140 @@
 import React from 'react';
-import '../css/main.css'; // Import the CSS file
-import BackButton from '../components/BackButton';
+import { Box, Typography, Button, Grid, Container, Paper } from '@mui/material';
 
 const ServicesPage = () => {
   return (
-    <div className="services">
-        <BackButton /> {/* Add the Back Button here */}
-      <header className="services-header">
-        <h1 className="services-title">Our Services</h1>
-        <p className="intro">
-          At DeliverEase, we pride ourselves on providing reliable and efficient transportation solutions tailored to meet your needs. Our commitment to excellence ensures that your cargo reaches its destination safely and on time.
-        </p>
-      </header>
+    <Container maxWidth="lg" sx={{ py: 5 }}>
+      {/* Header Section */}
+      <Box textAlign="center" mb={6}>
+        <Typography variant="h3" color="primary" gutterBottom>
+          DeliverEase Services
+        </Typography>
+        <Typography variant="subtitle1" color="textSecondary">
+          Simplifying logistics with reliable and efficient transportation solutions.
+        </Typography>
+      </Box>
 
-      <section className="service-overview">
-        <h2>Service Overview</h2>
-        <p>
-          We offer a variety of services designed to streamline your logistics processes and enhance your supply chain efficiency. Whether you need to transport small packages or large freight, we have the right solution for you.
-        </p>
-      </section>
+      {/* Service Overview Section */}
+      <Paper elevation={3} sx={{ p: 4, mb: 6 }}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+          Service Overview
+        </Typography>
+        <Typography variant="body1" color="textSecondary" lineHeight={1.8}>
+          At DeliverEase, we offer a wide range of services tailored to streamline your logistics processes. From parcel deliveries to custom logistics solutions, 
+          we prioritize efficiency, safety, and customer satisfaction.
+        </Typography>
+      </Paper>
 
-      <section className="service-list">
-        <h3>Key Services</h3>
-        <div className="service-grid">
-          <div className="service-item">
-            <h4>Parcel Delivery</h4>
-            <p>Fast and secure delivery of small packages across the country with real-time tracking.</p>
-          </div>
-          <div className="service-item">
-            <h4>Freight Transportation</h4>
-            <p>Customized freight solutions for businesses of all sizes, ensuring cost-effective and timely deliveries.</p>
-          </div>
-          <div className="service-item">
-            <h4>Real-Time Tracking</h4>
-            <p>Stay informed with our advanced tracking system that provides live updates on the status of your shipment.</p>
-          </div>
-          <div className="service-item">
-            <h4>Custom Logistics Solutions</h4>
-            <p>Tailored logistics planning that adapts to your unique business needs and industry requirements.</p>
-          </div>
-          <div className="service-item">
-            <h4>24/7 Customer Support</h4>
-            <p>Our dedicated customer service team is available around the clock to assist you with any inquiries or issues.</p>
-          </div>
-        </div>
-      </section>
+      {/* Key Services Section */}
+      <Box mb={6}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+          Key Services
+        </Typography>
+        <Grid container spacing={4}>
+          {[
+            {
+              title: 'Parcel Delivery',
+              description:
+                'Fast and secure delivery of small packages across the country with real-time tracking.',
+            },
+            {
+              title: 'Freight Transportation',
+              description:
+                'Customized freight solutions for businesses, ensuring cost-effective and timely deliveries.',
+            },
+            {
+              title: 'Real-Time Tracking',
+              description:
+                'Stay informed with live updates on the status of your shipment via our advanced tracking system.',
+            },
+            {
+              title: 'Custom Logistics Solutions',
+              description:
+                'Tailored logistics planning that meets your unique business requirements.',
+            },
+            {
+              title: '24/7 Customer Support',
+              description:
+                'Our dedicated team is available around the clock to assist with any inquiries or issues.',
+            },
+          ].map((service, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
+                  {service.title}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  {service.description}
+                </Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
 
-      <section className="service-benefits">
-        <h3>Why Choose DeliverEase?</h3>
-        <ul>
-          <li><strong>Reliability:</strong> Your cargo is safe with us. We have a proven track record of timely deliveries.</li>
-          <li><strong>Efficiency:</strong> Our streamlined processes minimize delays and maximize productivity.</li>
-          <li><strong>Flexibility:</strong> We adapt our services to meet your changing needs, ensuring that we are always a perfect fit for your logistics requirements.</li>
-          <li><strong>Affordability:</strong> Competitive pricing without compromising on quality, making our services accessible to everyone.</li>
-        </ul>
-      </section>
+      {/* Benefits Section */}
+      <Paper elevation={3} sx={{ p: 4, mb: 6, backgroundColor: '#f8f9fa' }}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+          Why Choose DeliverEase?
+        </Typography>
+        <Typography component="ul" sx={{ pl: 2 }}>
+          {[
+            'Reliability: Timely and safe delivery with a proven track record.',
+            'Efficiency: Streamlined processes that minimize delays and maximize productivity.',
+            'Flexibility: Adaptive services that cater to your evolving needs.',
+            'Affordability: Competitive pricing without compromising quality.',
+          ].map((benefit, index) => (
+            <Typography key={index} component="li" variant="body1" color="textSecondary" sx={{ mb: 1 }}>
+              {benefit}
+            </Typography>
+          ))}
+        </Typography>
+      </Paper>
 
-      <section className="testimonial">
-        <h3>What Our Clients Say</h3>
-        <blockquote>
-          <p>&quot;DeliverEase has transformed the way we manage our logistics. Their services are unmatched in reliability and efficiency!&quot;</p>
-          <footer>- Jane Doe, Logistics Manager</footer>
-        </blockquote>
-        <blockquote>
-          <p>&quot;The real-time tracking feature is a game changer. I can monitor my shipments effortlessly!&quot;</p>
-          <footer>- John Smith, Business Owner</footer>
-        </blockquote>
-      </section>
+      {/* Testimonials Section */}
+      <Box textAlign="center" mb={6}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+          What Our Clients Say
+        </Typography>
+        <Grid container spacing={4} justifyContent="center">
+          {[
+            {
+              quote:
+                '"DeliverEase transformed how we manage logistics. Reliable and efficient services!"',
+              author: '- Jane Doe, Logistics Manager',
+            },
+            {
+              quote: '"Real-time tracking is a game changer! Highly recommend DeliverEase."',
+              author: '- John Smith, Business Owner',
+            },
+          ].map((testimonial, index) => (
+            <Grid item xs={12} sm={6} md={5} key={index}>
+              <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
+                <Typography variant="body1" color="textSecondary" sx={{ fontStyle: 'italic' }}>
+                  {testimonial.quote}
+                </Typography>
+                <Typography variant="subtitle2" color="textPrimary" sx={{ mt: 2, fontWeight: 'bold' }}>
+                  {testimonial.author}
+                </Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
 
-      <footer className="contact-section">
-        <h2>Get Started Today!</h2>
-        <p>
-          Ready to experience hassle-free transport solutions? Contact us today for a free consultation and let us help you streamline your logistics.
-        </p>
-        <button className="contact-button">Contact Us</button>
-      </footer>
-    </div>
+      {/* Call to Action Section */}
+      <Box textAlign="center" sx={{ py: 4, backgroundColor: '#e3f2fd', borderRadius: 2 }}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
+          Ready to Simplify Your Logistics?
+        </Typography>
+        <Typography variant="body1" color="textSecondary" sx={{ mb: 3 }}>
+          Contact us today to experience hassle-free transportation solutions!
+        </Typography>
+        <Button variant="contained" color="primary" sx={{ px: 5, py: 1.5 }}>
+          Get in Touch
+        </Button>
+      </Box>
+    </Container>
   );
 };
 

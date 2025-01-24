@@ -1,69 +1,140 @@
 import React, { useState } from "react";
-import AuthService from "../Services/AuthService.js";
-import { useNavigate, Link } from "react-router-dom"; // Import useNavigate
-import "../css/main.css";
+import AuthService from "../Services/AuthService";
+import { useNavigate, Link } from "react-router-dom";
+import { Typography, TextField, Button, Alert } from "@mui/material";
+import Navigation2 from "../components/Navigation2.js";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); // State to hold error messages
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
+  const handleLogin = async () => {
     try {
       const response = await AuthService.login(email, password);
 
-      // Clear old token or user data
       localStorage.removeItem("token");
       localStorage.removeItem("user");
 
       const { token, user } = response.data;
 
-      // Store the new token and user data
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      // Navigate to the dashboard or relevant page
       navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
+      setError("Invalid credentials. Please try again.");
     }
   };
 
   return (
     <div>
-      <h2>Login</h2>
-      {error && <div className="error-message">{error}</div>}{" "}
-      {/* Show error message if any */}
-      <form onSubmit={handleLogin}>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
+      <Navigation2 />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          background: "linear-gradient(to top, #F3F6B2, #ffffff 40%)",
+          flexDirection: "column",
+        }}
+      >
+        <Typography
+          variant="h5"
+          style={{ fontWeight: "bold", color: "#333", marginBottom: "34px" }}
+        >
+          Sign in to your account
+        </Typography>
+
+        {error && (
+          <Alert severity="error" style={{ marginBottom: "16px" }}>
+            {error}
+          </Alert>
+        )}
+
+        {/* Email Field */}
+        <div style={{ width: "300px", marginBottom: "16px" }}>
+          <Typography
+            variant="body1"
+            style={{ fontWeight: "bold", marginBottom: "4px" }}
+          >
+            Email
+          </Typography>
+          <TextField
+            fullWidth
+            variant="standard"
             type="email"
-            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
+            required
+            InputProps={{ disableUnderline: true }}
+            sx={{
+              "& input": {
+                borderBottom: "2px solid #999",
+                transition: "border-color 0.3s ease-in-out",
+              },
+              "& input:hover": { borderBottom: "2px solid gold" },
+              "& input:focus": { borderBottom: "2px solid gold" },
+            }}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
+
+        {/* Password Field */}
+        <div style={{ width: "300px", marginBottom: "16px" }}>
+          <Typography
+            variant="body1"
+            style={{ fontWeight: "bold", marginBottom: "4px" }}
+          >
+            Password
+          </Typography>
+          <TextField
+            fullWidth
+            variant="standard"
             type="password"
-            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
+            required
+            InputProps={{ disableUnderline: true }}
+            sx={{
+              "& input": {
+                borderBottom: "2px solid #999",
+                transition: "border-color 0.3s ease-in-out",
+              },
+              "& input:hover": { borderBottom: "2px solid gold" },
+              "& input:focus": { borderBottom: "2px solid gold" },
+            }}
           />
         </div>
-        <button type="submit" className="btn">
+
+        <Button
+          onClick={handleLogin}
+          variant="contained"
+          style={{
+            backgroundColor: "#ffd700",
+            color: "#000",
+            fontWeight: "bold",
+            "&:hover": { backgroundColor: "#E6B800" },
+          }}
+        >
           Login
-        </button>
-        <p className="redirect-redirect">
-          Don&apos;t have an account? <Link to="/register">Register here</Link>
-        </p>
-      </form>
+        </Button>
+
+        <Typography variant="body2" style={{ marginTop: "16px" }}>
+          Don&apos;t have an account?{" "}
+          <Link
+            to="/register"
+            style={{
+              textDecoration: "underline",
+              color: "#000",
+              fontWeight: "bold",
+            }}
+          >
+            Register here
+          </Link>
+        </Typography>
+      </div>
     </div>
   );
 };

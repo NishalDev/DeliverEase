@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { initWeb3, deposit, getAccount } from "../Services/web3"; // Import web3 methods
+import {
+  Button,
+  CircularProgress,
+  Alert,
+  Box,
+  Checkbox,
+  FormControlLabel,
+} from "@mui/material"; // Import Material UI components
+
 const API_URL = "http://localhost:5002/api/payment";
 
 const PaymentPage = () => {
@@ -10,6 +19,7 @@ const PaymentPage = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isChecked, setIsChecked] = useState(false); // State for checkbox
 
   // Initialize Web3 when the component loads
   useEffect(() => {
@@ -110,14 +120,33 @@ const PaymentPage = () => {
   };
 
   return (
-    <div>
-      <h2>Payment for Good: {goodName}</h2>
-      <p>Delivery Charge: ₹{deliveryCharge}</p>
-      <button onClick={handlePayment} disabled={loading}>
-        {loading ? "Processing..." : "Proceed to Pay"}
-      </button>
-      {error && <div className="error-message">{error}</div>}
-    </div>
+    <Box sx={{ padding: 3 }}>
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={isChecked}
+            onChange={(e) => setIsChecked(e.target.checked)} // Update the checkbox state
+          />
+        }
+        label="I confirm to proceed with the payment"
+      />
+      <Box sx={{ marginTop: 2 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handlePayment}
+          disabled={!isChecked} // Disable button if checkbox is not checked
+          fullWidth
+        >
+          {loading ? <CircularProgress size={24} /> : `PAY ₹${deliveryCharge}` }
+        </Button>
+        {error && (
+          <Alert severity="error" sx={{ marginTop: 2 }}>
+            {error}
+          </Alert>
+        )}
+      </Box>
+    </Box>
   );
 };
 

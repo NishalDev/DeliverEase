@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BackButton from "../components/BackButton";
+import { Box, Button, Typography, Grid } from "@mui/material";
 import RoleButtons from "../components/RoleButtons";
 import AuthService from "../Services/AuthService";
-import { handleScroll } from "./scrollHandle.js"; // Import the scroll function
-import "../css/main.css";
-
+import Navigation2 from "../components/Navigation2.js";
+import Footer from "./Footer.js";
 const Dashboard = () => {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
@@ -13,12 +12,13 @@ const Dashboard = () => {
   const handleRoleSelect = async (selectedRole) => {
     setRole(selectedRole);
     localStorage.setItem("userRole", selectedRole);
-
     try {
       await AuthService.switchRole(selectedRole);
       const user = JSON.parse(localStorage.getItem("user"));
-      user.role = selectedRole;
-      localStorage.setItem("user", JSON.stringify(user));
+      if (user) {
+        user.role = selectedRole;
+        localStorage.setItem("user", JSON.stringify(user));
+      }
       navigate(
         selectedRole === "goodsOwner"
           ? "/goods-dashboard"
@@ -29,39 +29,84 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-
-    // Clean up the event listener on unmount
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
-    <div className="container">
-      <BackButton />
-      <header className="card full-page">
-        <h1 className="hero-title">Welcome to Your Dashboard</h1>
-        <p className="hero-subtitle">
-          Manage your logistics tasks efficiently.
-        </p>
-      </header>
-      <div className="card full-page">
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
+      <Navigation2 />
+      <Box sx={{ textAlign: "center", padding: 4, minHeight: "100vh" }}>
+        <Typography variant="h3" sx={{ fontWeight: 700, marginBottom: 10 }}>
+         What are you up to?
+        </Typography>
+
         {role === null ? (
-          <div>
-            <h2 className="hero-title">Select Your Role</h2>
-            <p className="hero-subtitle">Choose your role to get started</p>
-            <RoleButtons onSelectRole={handleRoleSelect} />
-          </div>
+          <Grid container spacing={4} justifyContent="center">
+            <Grid item xs={12} sm={6} md={4}>
+              <Button
+                variant="contained"
+                sx={{
+                  width: "100%",
+                  height: "200px", // Adjusted height for better display
+                  fontSize: "1.5rem",
+                  padding: "1rem",
+                  marginBottom: 2,
+                  background: "linear-gradient(to right, #FFFACD, #FFFFFF)", // Light Gold to White Gradient
+                  color: "black", // Black text for contrast
+                  "&:hover": {
+                    background: "linear-gradient(to right, #FFEB99, #F5F5F5)", // Lighter gradient on hover
+                  },
+                  display: "flex",
+                  flexDirection: "column", // Aligning text vertically
+                  justifyContent: "center", // Center content vertically
+                  textTransform: "none", // Disable text transformation (no uppercase)
+                }}
+                onClick={() => handleRoleSelect("goodsOwner")}
+              >
+                <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                  Goods Owner
+                </Typography>
+                <Typography variant="body2" sx={{ fontWeight: 300 }}>
+                  To request transporter and deliver goods to a place.
+                </Typography>
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Button
+                variant="contained"
+                sx={{
+                  width: "100%",
+                  height: "200px", // Adjusted height for better display
+                  fontSize: "1.5rem",
+                  padding: "1rem",
+                  marginBottom: 2,
+                  background: "linear-gradient(to right, #FFFACD, #FFFFFF)", // Light Gold to White Gradient
+                  color: "black", // Black text for contrast
+                  "&:hover": {
+                    background: "linear-gradient(to right, #FFEB99, #F5F5F5)", // Lighter gradient on hover
+                  },
+                  display: "flex",
+                  flexDirection: "column", // Aligning text vertically
+                  justifyContent: "center", // Center content vertically
+                  textTransform: "none", // Disable text transformation (no uppercase)
+                }}
+                onClick={() => handleRoleSelect("transporter")}
+              >
+                <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                  Transporter
+                </Typography>
+                <Typography variant="body2" sx={{ fontWeight: 300 }}>
+                  To offer transport services and deliver goods.
+                </Typography>
+              </Button>
+            </Grid>
+          </Grid>
         ) : (
-          <div>
-            <h2 className="hero-title">Selected Role: {role}</h2>
-            <p className="hero-subtitle">Redirecting to your dashboard...</p>
-          </div>
+          <Typography variant="h5" sx={{ marginBottom: 2 }}>
+            Selected Role: {role}
+          </Typography>
         )}
-      </div>
+      </Box>
+      <Footer />
     </div>
   );
 };
