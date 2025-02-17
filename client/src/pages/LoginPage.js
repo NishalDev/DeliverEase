@@ -33,7 +33,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <h2>Login</h2>
+      
       {error && <div className="error-message">{error}</div>}{" "}
       {/* Show error message if any */}
       <form onSubmit={handleLogin}>
@@ -58,7 +58,7 @@ const LoginPage = () => {
           />
         </div>
         <button type="submit" className="btn">
-          Register
+          Login
         </button>
         <p className="redirect-redirect">
           Don&apos;t have an account? <Link to="/register">Register here</Link>
