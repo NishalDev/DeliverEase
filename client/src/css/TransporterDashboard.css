@@ -1,0 +1,175 @@
+/* TransporterDashboard.css */
+
+.transporter-dashboard {
+  padding: 40px;
+  text-align: center;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.transporter-dashboard h2 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.dashboard-options {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.dashboard-option {
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  cursor: pointer;
+  width: 220px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-option:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-option h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.dashboard-option p {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+}
+
+.dashboard-option:hover h3 {
+  color: #0056b3;
+}
+
+/* Table Styles */
+.transporter-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 40px;
+}
+
+.transporter-table th,
+.transporter-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.transporter-table th {
+  background-color: #e2e2e2;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+}
+
+.transporter-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.transporter-table tr:hover {
+  background-color: #e0e0e0;
+}
+
+/* Button Styles */
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #007bff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.offers-ul {
+  list-style-type: none;
+  /* Remove default list styling */
+  padding: 0;
+  /* Remove default padding */
+  margin-top: 20px;
+  /* Add spacing above the list */
+}
+
+.offer-item {
+  background-color: #ffffff;
+  /* Background color for each offer item */
+  border: 1px solid #ddd;
+  /* Light border around each item */
+  border-radius: 8px;
+  /* Rounded corners */
+  padding: 15px;
+  /* Padding for better spacing */
+  margin: 10px 0;
+  /* Spacing between items */
+  cursor: pointer;
+  /* Change cursor to pointer */
+  transition: background-color 0.3s, transform 0.3s;
+  /* Transition effects */
+}
+
+.offer-item:hover {
+  background-color: #f0f0f0;
+  /* Change background on hover */
+  transform: translateY(-2px);
+  /* Slight lift on hover */
+}
+
+.offer-info {
+  background-color: #ffffff;
+  /* White background for the offer details */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Shadow for depth */
+  border-radius: 12px;
+  /* Rounded corners */
+  padding: 20px;
+  /* Padding for spacing */
+  margin-top: 20px;
+  /* Space above the offer info */
+}
+
+.offer-detail-item {
+  margin-bottom: 10px;
+  /* Space between each detail */
+  font-size: 16px;
+  /* Font size for details */
+  color: #333;
+  /* Text color */
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  /* Error text color */
+  margin-top: 10px;
+  /* Spacing above error message */
+}
+
+
+@media (max-width: 768px) {
+  .dashboard-options {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dashboard-option {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+}
